@@ -1,0 +1,64 @@
+# Maintainer: Jonathan Steel <jsteel at archlinux.org>
+# Contributor: Benjamin Klettbach <b.klettbach@gmail.com>
+
+pkgname=obs-studio-amf
+__pkgname=obs-studio
+conflicts=(obs-studio)
+pkgver=28.1.2
+__ver=${pkgver%%.*}
+provides=(obs-studio=$__ver)
+pkgrel=4
+pkgdesc="Free, open source software for live streaming and recording"
+arch=('x86_64')
+url="https://obsproject.com"
+license=('GPL2')
+depends=('ffmpeg' 'jansson' 'libxinerama' 'libxkbcommon-x11' 'mbedtls' 'rnnoise' 'pciutils'
+         'qt6-svg' 'curl' 'jack' 'gtk-update-icon-cache' 'pipewire' 'libxcomposite')
+makedepends=('cmake' 'libfdk-aac' 'x264' 'swig' 'python' 'luajit' 'sndio')
+optdepends=('libfdk-aac: FDK AAC codec support'
+            'libva-intel-driver: hardware encoding'
+            'libva-mesa-driver: hardware encoding'
+            'luajit: scripting support'
+            'python: scripting support'
+            'sndio: Sndio input client'
+            'v4l2loopback-dkms: virtual camera support')
+source=(7206.patch
+$__pkgname-$pkgver.tar.gz::https://github.com/jp9000/obs-studio/archive/$pkgver.tar.gz
+        fix_python_binary_loading.patch
+        ignore_unused_submodules.patch)
+sha256sums=(87bc6bab3492002cd6aec54136b0374c98a407e5a359e1bdd3d71ca6729619b0
+'c51c72945867cd9862ba663b01cc8313153a0249dd3df0626e63fc5d82a84b39'
+            'bdfbd062f080bc925588aec1989bb1df34bf779cc2fc08ac27236679cf612abd'
+            '60b0ee1f78df632e1a8c13cb0a7a5772b2a4b092c4a2a78f23464a7d239557c3')
+
+prepare() {
+pushd $__pkgname-$pkgver
+patch -Np1 < "$srcdir"/7206.patch
+popd
+  cd $__pkgname-$pkgver
+  patch -Np1 < "$srcdir"/fix_python_binary_loading.patch
+  patch -Np1 < "$srcdir"/ignore_unused_submodules.patch
+}
+
+build() {
+  cd $__pkgname-$pkgver
+
+  mkdir -p build; cd build
+
+  cmake -DCMAKE_INSTALL_PREFIX="/usr" \
+    -DENABLE_BROWSER=OFF \
+    -DENABLE_VST=ON \
+    -DENABLE_VLC=OFF \
+    -DENABLE_NEW_MPEGTS_OUTPUT=OFF \
+    -DENABLE_AJA=OFF \
+    -DENABLE_JACK=ON \
+    -DOBS_VERSION_OVERRIDE="$pkgver-$pkgrel" ..
+
+  make
+}
+
+package() {
+  cd $__pkgname-$pkgver/build
+
+  make install DESTDIR="$pkgdir"
+}
