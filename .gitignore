@@ -1,0 +1,15 @@
+/*/**
+!/*/
+!/*/*/
+
+!.gitignore
+
+!PKGBUILD
+!.SRCINFO
+!*.install
+
+!*.diff
+!*.patch
+
+!lilac.yaml
+!lilac.py
