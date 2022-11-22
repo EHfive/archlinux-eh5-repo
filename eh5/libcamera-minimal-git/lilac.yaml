@@ -1,0 +1,13 @@
+maintainers:
+  - github: EHfive
+    email: eh5@eh5.me
+
+update_on:
+  - source: git
+    git: https://git.libcamera.org/libcamera/libcamera.git
+    use_commit: true
+
+pre_build_script: vcs_update()
+post_build_script: |
+  git_pkgbuild_commit()
+  update_aur_repo()
