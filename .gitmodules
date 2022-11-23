@@ -1,0 +1,3 @@
+[submodule "3rdparty/chevron"]
+	path = 3rdparty/chevron
+	url = https://github.com/noahmorrison/chevron.git

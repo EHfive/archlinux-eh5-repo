@@ -1,0 +1,423 @@
+# Maintainer: Huang-Huang Bao <eh5@sokka.cn>
+# Contributor: Jan Alexander Steffens (heftig) <heftig@archlinux.org>
+# Contributor: Jan de Groot <jgc@archlinux.org>
+
+_pkgbase=pipewire
+pkgbase=pipewire{{ label }}{{ suffix }}
+pkgname=(pipewire{{ label }}{{ suffix }}
+         pipewire{{ label }}-docs{{ suffix }}
+         pipewire{{ label }}-alsa{{ suffix }}
+         pipewire{{ label }}-jack{{ suffix }}
+         pipewire{{ label }}-pulse{{ suffix }}
+         pipewire{{ label }}-v4l2{{ suffix }}
+         pipewire{{ label }}-x11-bell{{ suffix }}
+{{# with.zeroconf }}
+         pipewire{{ label }}-zeroconf{{ suffix }}
+{{/ with.zeroconf }}
+{{# with.gst }}
+         gst-plugin-pipewire{{ label }}{{ suffix }}
+{{/ with.gst }}
+{{# with.jackClient }}
+         pipewire{{ label }}-jack-client{{ suffix }}
+{{/ with.jackClient }}
+{{# with.vulkan }}
+         pipewire{{ label }}-vulkan{{ suffix }}
+{{/ with.vulkan }}
+{{# with.ffmpeg }}
+         pipewire{{ label }}-ffmpeg{{ suffix }}
+{{/ with.ffmpeg }}
+{{# with.roc }}
+         pipewire{{ label }}-roc{{ suffix }}
+{{/ with.roc }}
+{{# with.libcamera }}
+         pipewire{{ label }}-libcamera{{ suffix }}
+{{/ with.libcamera }}
+         )
+pkgver=0.3.31.r2.g5497d2d9
+pkgrel=1
+pkgdesc="Low-latency audio/video router and processor"
+url="https://pipewire.org"
+license=(MIT)
+arch=(x86_64)
+makedepends=(git meson doxygen python-docutils graphviz ncurses
+             readline systemd libsndfile alsa-lib dbus rtkit libpulse
+             glib2 webrtc-audio-processing libusb bluez-libs
+             sbc libldac libfreeaptx libfdk-aac opus
+             lilv libx11 libxfixes libcanberra
+{{# with.lc3 }}
+             liblc3
+{{/ with.lc3 }}
+{{# with.zeroconf }}
+             avahi openssl
+{{/ with.zeroconf }}
+{{# with.gst }}
+             gst-plugins-base-libs
+{{/ with.gst }}
+{{# with.jackClient }}
+             jack2
+{{/ with.jackClient }}
+{{# with.vulkan }}
+             vulkan-headers vulkan-icd-loader
+{{/ with.vulkan }}
+{{# with.ffmpeg }}
+             ffmpeg
+{{/ with.ffmpeg }}
+{{# with.roc }}
+             roc-toolkit
+{{/ with.roc }}
+{{# with.libcamera }}
+             libcamera-minimal-git
+             libdrm
+{{/ with.libcamera }}
+             )
+source=("git+https://gitlab.freedesktop.org/pipewire/${_pkgbase}.git")
+sha256sums=('SKIP')
+
+prepare() {
+  cd $_pkgbase
+  # remove export of LD_LIBRARY_PATH for pw-jack as it would add /usr/lib
+  sed -i '/LD_LIBRARY_PATH/d' pipewire-jack/src/pw-jack.in
+}
+
+pkgver() {
+  cd $_pkgbase
+  git describe --long --tags --abbrev=8 | sed 's/\([^-]*-g\)/r\1/;s/-/./g'
+}
+
+build() {
+  # make AUR helper happy
+  rm -rf build || true
+
+  local meson_options=(
+    -D bluez5-codec-lc3plus=disabled
+    -D docs=enabled
+    -D jack-devel=true
+    -D libjack-path=/usr/lib
+    -D sdl2=disabled
+    -D session-managers=[]
+    -D test=enabled
+{{# with.lc3 }}
+    -D bluez5-codec-lc3=enabled
+{{/ with.lc3 }}
+{{^ with.zeroconf }}
+    -D avahi=disabled
+{{/ with.zeroconf }}
+{{^ with.jackClient }}
+    -D jack=disabled
+{{/ with.jackClient }}
+{{# with.vulkan }}
+    -D vulkan=enabled
+{{/ with.vulkan }}
+{{^ with.vulkan }}
+    -D vulkan=disabled
+{{/ with.vulkan }}
+{{# with.ffmpeg }}
+    -D ffmpeg=enabled
+{{/ with.ffmpeg }}
+{{^ with.ffmpeg }}
+    -D ffmpeg=disabled
+{{/ with.ffmpeg }}
+{{^ with.roc }}
+    -D roc=disabled
+{{/ with.roc }}
+{{^ with.libcamera }}
+    -D libcamera=disabled
+{{/ with.libcamera }}
+    -D udevrulesdir=/usr/lib/udev/rules.d
+  )
+
+  arch-meson $_pkgbase build "${meson_options[@]}"
+  meson compile -C build
+}
+
+check() {
+  meson test -C build --print-errorlogs
+}
+
+_pick() {
+  local p="$1" f d; shift
+  for f; do
+    d="$srcdir/$p/${f#$pkgdir/}"
+    mkdir -p "$(dirname "$d")"
+    mv "$f" "$d"
+    rmdir -p --ignore-fail-on-non-empty "$(dirname "$f")"
+  done
+}
+
+_ver=${pkgver:0:3}
+_short_pkgver=${pkgver%%.r*}
+
+package_pipewire{{ label }}{{ suffix }}() {
+  license+=(LGPL)
+  depends=(rtkit libdbus-1.so libncursesw.so libreadline.so
+           libsndfile.so libudev.so libasound.so libsystemd.so
+           libwebrtc_audio_processing.so libusb-1.0.so
+           libbluetooth.so libsbc.so libldacBT_{enc,abr}.so
+           libfreeaptx.so libfdk-aac.so libopus.so
+{{# with.lc3 }}
+           liblc3.so
+{{/ with.lc3 }}
+           liblilv-0.so)
+  optdepends=('pipewire-session-manager: Session manager'
+              'pipewire{{ label }}-docs{{ suffix }}: Documentation'
+              'pipewire{{ label }}-alsa{{ suffix }}: ALSA configuration'
+              'pipewire{{ label }}-jack{{ suffix }}: JACK support'
+{{# with.jackClient }}
+              'pipewire{{ label }}-jack-client{{ suffix }}: JACK device/client'
+{{/ with.jackClient }}
+              'pipewire{{ label }}-pulse{{ suffix }}: PulseAudio replacement'
+              'pipewire{{ label }}-v4l2{{ suffix }}: V4L2 interceptor'
+              'pipewire{{ label }}-x11-bell{{ suffix }}: X11 bell'
+{{# with.zeroconf }}
+              'pipewire{{ label }}-zeroconf{{ suffix }}: Zeroconf support'
+{{/ with.zeroconf }}
+{{# with.roc }}
+              'pipewire{{ label }}-roc{{ suffix }}: ROC support'
+{{/ with.roc }}
+{{# with.gst }}
+              'gst-plugin-pipewire{{ label }}{{ suffix }}: GStreamer support'
+{{/ with.gst }}
+              'ofono: ofono Bluetooth HFP support'
+              'hsphfpd: hsphfpd Bluetooth HSP/HFP support')
+  provides=("pipewire=$_short_pkgver" alsa-card-profiles libpipewire-$_ver.so)
+  conflicts=(pipewire alsa-card-profiles)
+  install=pipewire.install
+
+  meson install -C build --destdir "$pkgdir"
+
+  install -Dt "$pkgdir/usr/share/licenses/$pkgname" -m644 $_pkgbase/COPYING
+
+  cd "$pkgdir"
+
+  mkdir -p etc/alsa/conf.d
+  ln -st etc/alsa/conf.d /usr/share/alsa/alsa.conf.d/50-pipewire.conf
+
+  # directories for overrides
+  mkdir -p etc/pipewire/{client-rt,client,minimal,pipewire,pipewire-pulse}.conf.d
+
+  _pick docs usr/share/doc
+
+  _pick jack usr/bin/pw-jack
+  _pick jack usr/include/jack
+  _pick jack usr/lib/libjack*
+  _pick jack usr/lib/pkgconfig/jack.pc
+  _pick jack usr/share/man/man1/pw-jack.1
+  _pick jack usr/share/pipewire/jack.conf
+
+  _pick pulse usr/bin/pipewire-pulse
+  _pick pulse usr/lib/pipewire-$_ver/libpipewire-module-protocol-pulse.so
+  _pick pulse usr/lib/pipewire-$_ver/libpipewire-module-pulse-tunnel.so
+  _pick pulse usr/lib/systemd/user/pipewire-pulse.*
+
+  _pick v4l2 usr/bin/pw-v4l2 usr/lib/pipewire-$_ver/v4l2
+
+  _pick x11-bell usr/lib/pipewire-$_ver/libpipewire-module-x11-bell.so
+{{# with.zeroconf }}
+
+  _pick zeroconf usr/lib/pipewire-$_ver/libpipewire-module-{raop,zeroconf}-discover.so
+{{/ with.zeroconf }}
+{{# with.gst }}
+
+  _pick gst usr/lib/gstreamer-1.0
+{{/ with.gst }}
+{{# with.jackClient }}
+
+  _pick jack-client usr/lib/spa-0.2/jack
+{{/ with.jackClient }}
+{{# with.vulkan }}
+
+  _pick vulkan usr/lib/spa-0.2/vulkan
+{{/ with.vulkan }}
+{{# with.ffmpeg }}
+
+  _pick ffmpeg usr/lib/spa-0.2/ffmpeg
+{{/ with.ffmpeg }}
+{{# with.roc }}
+
+  _pick roc usr/lib/pipewire-$_ver/libpipewire-module-roc-{sink,source}.so
+{{/ with.roc }}
+{{# with.libcamera }}
+
+  _pick libcamera usr/lib/spa-0.2/libcamera
+{{/ with.libcamera }}
+}
+
+package_pipewire{{ label }}-docs{{ suffix }}() {
+  arch=(any)
+  options=(!strip)
+  provides=(pipewire-docs)
+  conflicts=(pipewire-docs)
+  pkgdesc+=" - documentation"
+
+  mv docs/* "$pkgdir"
+
+  install -Dt "$pkgdir/usr/share/licenses/$pkgname" -m644 $_pkgbase/COPYING
+}
+
+package_pipewire{{ label }}-alsa{{ suffix }}() {
+  pkgdesc+=" - ALSA configuration"
+  depends=(pipewire-session-manager pipewire{{ label }}{{ suffix }})
+  provides=(pipewire-alsa pulseaudio-alsa)
+  conflicts=(pipewire-alsa)
+
+  mkdir -p "$pkgdir/etc/alsa/conf.d"
+  ln -st "$pkgdir/etc/alsa/conf.d" \
+    /usr/share/alsa/alsa.conf.d/99-pipewire-default.conf
+  install -Dm644 /dev/null "$pkgdir/usr/share/pipewire/media-session.d/with-alsa"
+
+  install -Dt "$pkgdir/usr/share/licenses/$pkgname" -m644 $_pkgbase/COPYING
+}
+
+package_pipewire{{ label }}-jack{{ suffix }}() {
+  pkgdesc+=" - JACK support"
+  license+=(GPL2)
+  depends=(sh pipewire-session-manager pipewire{{ label }}{{ suffix }}
+           libpipewire-$_ver.so)
+  optdepends=('jack-example-tools: for official JACK example-clients and tools')
+  provides=(pipewire-jack jack libjack.so libjackserver.so libjacknet.so)
+  conflicts=(pipewire-jack jack jack2)
+
+  mv jack/* "$pkgdir"
+
+  install -Dm644 /dev/null \
+    "$pkgdir/usr/share/pipewire/media-session.d/with-jack"
+
+  install -Dt "$pkgdir/usr/share/licenses/$pkgname" -m644 $_pkgbase/COPYING
+}
+
+package_pipewire{{ label }}-pulse{{ suffix }}() {
+  pkgdesc+=" - PulseAudio replacement"
+  depends=(pipewire-session-manager pipewire{{ label }}{{ suffix }}
+           libpipewire-$_ver.so libpulse.so libglib-2.0.so
+{{# with.zeroconf }}
+           libavahi-{client,common}.so
+{{/ with.zeroconf }}
+           )
+  provides=(pipewire-pulse pulseaudio pulseaudio-bluetooth)
+  conflicts=(pipewire-pulse pulseaudio pulseaudio-bluetooth)
+  install=pipewire-pulse.install
+
+  mv pulse/* "$pkgdir"
+
+  install -Dm644 /dev/null \
+    "$pkgdir/usr/share/pipewire/media-session.d/with-pulseaudio"
+
+  install -Dt "$pkgdir/usr/share/licenses/$pkgname" -m644 $_pkgbase/COPYING
+}
+
+package_pipewire{{ label }}-v4l2{{ suffix }}() {
+  pkgdesc+=" - V4L2 interceptor"
+  depends=(pipewire-session-manager pipewire{{ label }}{{ suffix }}
+           libpipewire-$_ver.so)
+  provides=(pipewire-v4l2)
+  conflicts=(pipewire-v4l2)
+
+  mv v4l2/* "$pkgdir"
+
+  install -Dt "$pkgdir/usr/share/licenses/$pkgname" -m644 $_pkgbase/COPYING
+}
+
+package_pipewire{{ label }}-x11-bell{{ suffix }}() {
+  pkgdesc+=" - X11 bell"
+  depends=(sh libx11 libxfixes pipewire{{ label }}{{ suffix }}
+           libpipewire-$_ver.so libcanberra.so)
+  provides=(pipewire-x11-bell)
+  conflicts=(pipewire-x11-bell)
+
+  mv x11-bell/* "$pkgdir"
+
+  install -Dt "$pkgdir/usr/share/licenses/$pkgname" -m644 $_pkgbase/COPYING
+}
+{{# with.zeroconf }}
+
+package_pipewire{{ label }}-zeroconf{{ suffix }}() {
+  pkgdesc+=" - Zeroconf support"
+  depends=(pipewire{{ label }}{{ suffix }} libpipewire-$_ver.so
+           libavahi-{client,common}.so openssl)
+  provides=(pipewire-zeroconf)
+  conflicts=(pipewire-zeroconf)
+
+  mv zeroconf/* "$pkgdir"
+
+  install -Dt "$pkgdir/usr/share/licenses/$pkgname" -m644 $_pkgbase/COPYING
+}
+{{/ with.zeroconf }}
+{{# with.gst }}
+
+package_gst-plugin-pipewire{{ label }}{{ suffix }}() {
+  pkgdesc="Multimedia graph framework - pipewire plugin"
+  depends=(gst-plugins-base-libs pipewire-session-manager
+           pipewire{{ label }}{{ suffix }} libpipewire-$_ver.so)
+  provides=(gst-plugin-pipewire)
+  conflicts=(gst-plugin-pipewire)
+
+  mv gst/* "$pkgdir"
+
+  install -Dt "$pkgdir/usr/share/licenses/$pkgname" -m644 $_pkgbase/COPYING
+}
+{{/ with.gst }}
+{{# with.jackClient }}
+
+package_pipewire{{ label }}-jack-client{{ suffix }}() {
+  pkgdesc="JACK client SPA plugin"
+  depends=(pipewire{{ label }}{{ suffix }} libjack.so)
+  provides=(pipewire-jack-client)
+  conflicts=(pipewire-jack-client)
+
+  mv jack-client/* "${pkgdir}"
+
+  install -Dt "$pkgdir/usr/share/licenses/$pkgname" -m644 $_pkgbase/COPYING
+}
+{{/ with.jackClient }}
+{{# with.vulkan }}
+
+package_pipewire{{ label }}-vulkan{{ suffix }}() {
+  pkgdesc="Vulkan SPA plugin"
+  depends=(pipewire{{ label }}{{ suffix }} vulkan-icd-loader)
+  provides=(pipewire-vulkan)
+  conflicts=(pipewire-vulkan)
+
+  mv vulkan/* "${pkgdir}"
+
+  install -Dt "$pkgdir/usr/share/licenses/$pkgname" -m644 $_pkgbase/COPYING
+}
+{{/ with.vulkan }}
+{{# with.ffmpeg }}
+
+package_pipewire{{ label }}-ffmpeg{{ suffix }}() {
+  pkgdesc="FFmpeg SPA plugin"
+  depends=(pipewire{{ label }}{{ suffix }} libavcodec.so libavformat.so)
+  provides=(pipewire-ffmpeg)
+  conflicts=(pipewire-ffmpeg)
+
+  mv ffmpeg/* "${pkgdir}"
+
+  install -Dt "$pkgdir/usr/share/licenses/$pkgname" -m644 $_pkgbase/COPYING
+}
+{{/ with.ffmpeg }}
+{{# with.roc }}
+
+package_pipewire{{ label }}-roc{{ suffix }}() {
+  pkgdesc+=" - ROC support"
+  depends=(pipewire{{ label }}{{ suffix }} roc-toolkit)
+  provides=(pipewire-roc)
+  conflicts=(pipewire-roc)
+
+  mv roc/* "${pkgdir}"
+
+  install -Dt "$pkgdir/usr/share/licenses/$pkgname" -m644 $_pkgbase/COPYING
+}
+{{/ with.roc }}
+{{# with.libcamera }}
+
+package_pipewire{{ label }}-libcamera{{ suffix }}() {
+  pkgdesc+="libcamera SPA plugin"
+  depends=(pipewire{{ label }}{{ suffix }} libcamera)
+  provides=(pipewire-libcamera)
+  conflicts=(pipewire-libcamera)
+
+  mv libcamera/* "${pkgdir}"
+
+  install -Dt "$pkgdir/usr/share/licenses/$pkgname" -m644 $_pkgbase/COPYING
+}
+{{/ with.libcamera }}

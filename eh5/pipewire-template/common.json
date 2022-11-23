@@ -1,0 +1,14 @@
+{
+  "label": "-common",
+  "suffix": "-git",
+  "with": {
+    "lc3": false,
+    "libcamera": false,
+    "zeroconf": true,
+    "gst": true,
+    "jackClient": false,
+    "vulkan": false,
+    "ffmpeg": false,
+    "roc": false
+  }
+}
