@@ -1,4 +1,4 @@
-/*/**
+/eh5/**
 !/*/
 !/*/*/
 !/3rdparty/**
@@ -14,3 +14,6 @@
 
 !lilac.yaml
 !lilac.py
+
+*.pyc
+.Trash-*/
