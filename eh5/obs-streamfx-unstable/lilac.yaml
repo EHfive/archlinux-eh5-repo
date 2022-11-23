@@ -1,0 +1,10 @@
+maintainers:
+  - github: EHfive
+    email: eh5@eh5.me
+
+update_on:
+  - source: aur
+    aur: obs-streamfx-unstable
+
+pre_build_script: aur_pre_build(maintainers=['Freso'])
+post_build_script: aur_post_build()
