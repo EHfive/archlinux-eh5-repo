@@ -7,7 +7,7 @@ conflicts=(obs-studio)
 pkgver=28.1.2
 __ver=${pkgver%%.*}
 provides=(obs-studio=$__ver)
-pkgrel=4
+pkgrel=5
 pkgdesc="Free, open source software for live streaming and recording"
 arch=('x86_64')
 url="https://obsproject.com"
