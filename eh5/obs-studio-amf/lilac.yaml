@@ -4,17 +4,5 @@ maintainers:
 
 update_on:
   - source: archpkg
-    alpm: obs-studio
-  - source: alpm
-    alpm: ffmpeg
-    provided: libavcodec.so
-  - source: alpm
-    alpm: ffmpeg
-    provided: libavutil.so
-  - source: alpm
-    alpm: ffmpeg
-    provided: libavformat.so
-  - source: alpm
-    alpm: curl
-    provided: libcurl.so
+    archpkg: obs-studio
   - alias: python
