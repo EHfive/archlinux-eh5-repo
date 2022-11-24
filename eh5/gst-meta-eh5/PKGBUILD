@@ -1,0 +1,14 @@
+pkgname=gst-meta-eh5
+pkgver=1
+pkgrel=1
+pkgdesc='Meta package for Gstreamer support'
+license=(custom)
+arch=(any)
+depends=(
+    gstreamer
+    gst-plugins-base
+    gst-plugins-good
+    gst-plugins-bad
+    gst-plugin-va
+    gst-libav
+)
