@@ -1,0 +1,12 @@
+pkgname=pipewire-devel-meta
+pkgver=1
+pkgrel=1
+pkgdesc='Meta package for pipewire development'
+license=(custom)
+arch=(any)
+depends=(
+  git meson doxygen graphviz xmltoman valgrind
+  alsa-lib gst-plugins-base-libs sbc rtkit dbus sdl2
+  ncurses libsndfile bluez-libs libldac libfreeaptx
+  libfdk-aac libusb
+)
