@@ -10,4 +10,3 @@ build_prefix: multilib
 
 repo_depends:
   - icoutils-noperl
-  - wineasio
