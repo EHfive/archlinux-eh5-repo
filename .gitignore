@@ -15,5 +15,6 @@
 !lilac.yaml
 !lilac.py
 
+__pycache__
 *.pyc
 .Trash-*/
