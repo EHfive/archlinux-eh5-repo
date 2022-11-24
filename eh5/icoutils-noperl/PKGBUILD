@@ -7,7 +7,7 @@
 _pkgname=icoutils
 pkgname=icoutils-noperl
 pkgver=0.32.3
-pkgrel=1
+pkgrel=2
 pkgdesc='Extracts and converts images in MS Windows(R) icon and cursor files.'
 arch=('x86_64')
 license=('GPL')
