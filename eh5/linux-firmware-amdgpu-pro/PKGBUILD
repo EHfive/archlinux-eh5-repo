@@ -1,0 +1,54 @@
+# Maintainer: Thomas Bächler <thomas@archlinux.org>
+
+pkgbase=linux-firmware
+pkgname=( linux-firmware-amdgpu-pro )
+_tag=20220815
+pkgver=20220815.8413c63
+pkgrel=3
+url="https://git.kernel.org/?p=linux/kernel/git/firmware/linux-firmware.git;a=summary"
+license=('GPL2' 'GPL3' 'custom')
+arch=('any')
+makedepends=('git')
+options=(!strip)
+source=("git+https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git#tag=${_tag}"
+        copy-firmware2.sh)
+sha256sums=('SKIP'
+            'c6f34db08a31919ec71cfa0f9f3cdc345d4dd800c5d657dd960210a71dc0d962')
+_backports=(
+)
+
+prepare() {
+  cd ${pkgbase}
+
+  local _c
+  for _c in "${_backports[@]}"; do
+    git log --oneline -1 "${_c}"
+    git cherry-pick -n "${_c}"
+  done
+}
+
+pkgver() {
+  cd ${pkgbase}
+
+  # Commit date + short rev
+  echo $(TZ=UTC git show -s --pretty=%cd --date=format-local:%Y%m%d HEAD).$(git rev-parse --short HEAD)
+}
+
+build() {
+  cd ${pkgbase}
+}
+
+package_linux-firmware-amdgpu-pro() {
+  pkgdesc="Firmware files for AMDGPU PRO stack"
+  provides=('linux-firmware-amdgpu')
+  conflicts=('linux-firmware-amdgpu' 'linux-firmware>0')
+  depends=('linux-firmware-whence')
+
+  cd ${pkgbase}
+
+  bash ${srcdir}/copy-firmware2.sh -C --prefix amdgpu "${pkgdir}/usr/lib/firmware"
+
+  install -Dt "${pkgdir}/usr/share/licenses/${pkgname}" -m644 LICENSE.amdgpu
+}
+
+# vim:set sw=2 et:
