@@ -19,7 +19,7 @@ pkgname=(pipewire-full-git
          pipewire-full-roc-git
          pipewire-full-libcamera-git
          )
-pkgver=0.3.60.r46.gbe1d4940
+pkgver=0.3.61.r0.gf038e3f2
 pkgrel=1
 pkgdesc="Low-latency audio/video router and processor"
 url="https://pipewire.org"
