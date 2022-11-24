@@ -1,0 +1,17 @@
+--- config.old	2022-05-30 09:58:24.303192060 +0800
++++ config	2022-05-31 00:49:11.610960481 +0800
+@@ -402,3 +402,3 @@
+ # CONFIG_MZEN2 is not set
+-# CONFIG_MZEN3 is not set
++CONFIG_MZEN3=y
+ # CONFIG_MPSC is not set
+@@ -425,3 +425,3 @@
+ # CONFIG_MALDERLAKE is not set
+-CONFIG_GENERIC_CPU=y
++# CONFIG_GENERIC_CPU is not set
+ # CONFIG_GENERIC_CPU2 is not set
+@@ -10697,2 +10698,4 @@
+ # CONFIG_FONT_6x8 is not set
++CONFIG_FONT_CJK_16x16=y
++CONFIG_FONT_CJK_32x32=y
+ CONFIG_SG_POOL=y

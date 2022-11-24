@@ -1,0 +1,12 @@
+maintainers:
+  - github: EHfive
+    email: eh5@eh5.me
+
+update_on:
+  - source: archpkg
+    archpkg: linux-zen
+  - source: regex
+    url: https://github.com/zen-kernel/zen-kernel/tags
+    regex: 'v[0-9.]+-zen[0-9]'
+    from_pattern: 'v([0-9.]+)-(zen[0-9])'
+    to_pattern: '\1.\2'
