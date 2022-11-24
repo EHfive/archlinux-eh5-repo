@@ -4,7 +4,7 @@
 
 None (yet?)
 
-## Setup repo builder
+## Setup repo package builder
 
 1. Clone the repo
 
@@ -16,4 +16,4 @@ git clone --recurse-submodules https://github.com/EHfive/archlinux-eh5-repo.git
 
 ## 3rd party
 
-- [chevron](https://github.com/noahmorrison/chevron): mustache templating, see [pipewire-template](eh5/pipewire-template/template)
+- [chevron](https://github.com/noahmorrison/chevron): mustache templating, see [render.py](scripts/render.py)
