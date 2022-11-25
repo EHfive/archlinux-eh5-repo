@@ -9,5 +9,4 @@ update_on:
 repo_depends:
   - openfec-roc
 
-pre_build_script: vcs_update()
 post_build_script: git_pkgbuild_commit()

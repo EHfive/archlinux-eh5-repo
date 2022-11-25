@@ -6,7 +6,6 @@ update_on:
   - source: github
     github: google/liblc3
 
-pre_build_script: vcs_update()
 post_build_script: |
   git_pkgbuild_commit()
   update_aur_repo()

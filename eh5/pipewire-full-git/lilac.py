@@ -16,7 +16,6 @@ def pre_build():
         dirname
     ])
     g.files = res.splitlines()
-    vcs_update()
 
 
 def post_build():
