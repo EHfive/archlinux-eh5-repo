@@ -1,6 +1,6 @@
 # archlinux-eh5-repo
 
-## Pre-built binary repo
+## Public pre-built binary repo
 
 None (yet?)
 
