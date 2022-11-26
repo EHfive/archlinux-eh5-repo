@@ -411,7 +411,7 @@ package_pipewire{{ label }}-roc{{ suffix }}() {
 {{# with.libcamera }}
 
 package_pipewire{{ label }}-libcamera{{ suffix }}() {
-  pkgdesc+="libcamera SPA plugin"
+  pkgdesc="libcamera SPA plugin"
   depends=(pipewire{{ label }}{{ suffix }} libcamera)
   provides=(pipewire-libcamera)
   conflicts=(pipewire-libcamera)
