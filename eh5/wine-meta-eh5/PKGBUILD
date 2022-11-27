@@ -9,7 +9,7 @@ depends=(
   # exe-thumbnailer
   wine-gecko            wine-mono
   # wine-nine             wine-installer
-  winetricks            #wineasio
+  winetricks            wineasio
   giflib                lib32-giflib
   libpng                lib32-libpng
   libldap               lib32-libldap
