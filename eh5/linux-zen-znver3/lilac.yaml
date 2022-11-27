@@ -3,9 +3,10 @@ maintainers:
     email: eh5@eh5.me
 
 update_on:
-  - source: regex
-    url: https://github.com/zen-kernel/zen-kernel/tags
-    regex: 'v[0-9.]+-zen[0-9]'
+  - source: github
+    github: zen-kernel/zen-kernel
+    use_max_tag: true
+    include_regex: 'v[0-9.]+-zen[0-9]'
     from_pattern: 'v([0-9.]+)-(zen[0-9])'
     to_pattern: '\1.\2'
   - source: archpkg
