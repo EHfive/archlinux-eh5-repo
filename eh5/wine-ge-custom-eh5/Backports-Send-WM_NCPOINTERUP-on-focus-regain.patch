@@ -1,0 +1,29 @@
+From 96913d53f29f75b9c053ac48192dc7a4e40a4be8 Mon Sep 17 00:00:00 2001
+From: David Torok <dt@zeroitlab.com>
+Date: Sun, 27 Nov 2022 19:21:21 +0800
+Subject: [PATCH] Backports: Send WM_NCPOINTERUP on focus regain
+
+See https://bugs.winehq.org/show_bug.cgi?id=48121
+
+Co-authored-by: Huang-Huang Bao <eh5@sokka.cn>
+---
+ dlls/user32/focus.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/dlls/user32/focus.c b/dlls/user32/focus.c
+index 9d2d08b586d..5411479c57d 100644
+--- a/dlls/user32/focus.c
++++ b/dlls/user32/focus.c
+@@ -173,6 +173,9 @@ static BOOL set_active_window( HWND hwnd, HWND *prev, BOOL mouse, BOOL focus )
+         SendMessageW( hwnd, WM_ACTIVATE,
+                       MAKEWPARAM( mouse ? WA_CLICKACTIVE : WA_ACTIVE, IsIconic(hwnd) ),
+                       (LPARAM)previous );
++
++        SendMessageW( hwnd, WM_NCPOINTERUP, 0, 0 );
++
+         if (GetAncestor( hwnd, GA_PARENT ) == GetDesktopWindow())
+             PostMessageW( GetDesktopWindow(), WM_PARENTNOTIFY, WM_NCACTIVATE, (LPARAM)hwnd );
+     }
+-- 
+2.38.1
+
