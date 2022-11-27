@@ -1,0 +1,15 @@
+maintainers:
+  - github: EHfive
+    email: eh5@eh5.me
+
+update_on:
+  - source: aur
+    aur: wineasio
+
+build_prefix: multilib
+
+pre_build_script: |
+  aur_pre_build(maintainers=['Kazel'])
+  add_into_array('options', ['!lto'])
+
+post_build_script: aur_post_build()
