@@ -11,7 +11,7 @@ pkgname=wine-ge-custom-eh5
 _pkgname=wine-ge-custom
 pkgver=GE.Proton7.34
 _srctag=${pkgver//./-} # _srctag=GE-Proton7-28
-pkgrel=0
+pkgrel=1
 
 #_winever=${pkgver%.*}
 #_winever=$pkgver
