@@ -1,43 +1,44 @@
-# Maintainer: Pellegrino Prevete <pellegrinoprevete@gmail.com>
+# Maintainer: Huang-Huang Bao <eh5@sokka.cn>
+# Contributor: Pellegrino Prevete <pellegrinoprevete@gmail.com>
 # Contributor: dexterlb <dexterlb@qtrp.org>
 
 _pkgname=openfec
 pkgname="${_pkgname}-roc"
-pkgver=1.4.2.4
-_sover=${pkgver%.*}
-pkgrel=6
+pkgver=1.4.2.5
+pkgrel=1
 pkgdesc="Open Forward Erasure Codes (ROC fork)"
 arch=('x86_64' 'i686' 'aarch64' 'armv7l' 'armv6l' 'armv7h' 'armv6h')
-url="https://${_pkgname}.org"
+url="https://github.com/roc-streaming/${_pkgname}"
 license=('CeCill')
-depends=()
-makedepends=('cmake')
-source=("$_pkgname-$pkgver.tar.gz::https://github.com/roc-streaming/${_pkgname}/archive/refs/tags/v${pkgver}.tar.gz")
-sha256sums=('691e3ec41b948e93dd34c690139624e2e20ed390e6a5f000f238491574343a16')
+depends=('glibc')
+makedepends=('git' 'cmake')
+source=("git+https://github.com/roc-streaming/openfec#tag=v${pkgver}")
+sha256sums=('SKIP')
 provides=("${_pkgname}")
 conflicts=("${_pkgname}")
 
-prepare() {
-  mkdir -p build
-}
-
 build() {
-  cd build
-  cmake ../${_pkgname}-${pkgver} \
+  cd "$_pkgname"
+  rm -rf builddir
+  mkdir -p builddir
+  cd builddir
+  cmake ../ \
     -DCMAKE_INSTALL_PREFIX=/usr \
-    -DCMAKE_INSTALL_LIBDIR=lib \
-    -DBUILD_SHARED_LIBS=ON
+    -DCMAKE_INSTALL_LIBDIR=lib
+
   make
 }
 
 package() {
-  install -Dm755 ${_pkgname}-${pkgver}/bin/Release/libopenfec.so.$_sover "$pkgdir/usr/lib/libopenfec.so.$_sover"
-  ln -s libopenfec.so.$_sover "$pkgdir/usr/lib/libopenfec.so.1"
-  ln -s libopenfec.so.$_sover "$pkgdir/usr/lib/libopenfec.so"
-  install -Dm644 ${_pkgname}-${pkgver}/LICENCE_CeCILL-C_V1-en.txt "$pkgdir/usr/share/licenses/$_pkgname/LICENSE"
+  cd "$_pkgname/builddir"
+  make DESTDIR="${pkgdir}" install
+
+  cd "$srcdir/$_pkgname"
+  install -Dm644 pc/openfec.pc "$pkgdir/usr/lib/pkgconfig/openfec.pc"
+  install -Dm644 Licence_CeCILL_V2-en.txt "$pkgdir/usr/share/licenses/$_pkgname/LICENSE"
 
   mkdir -p "$pkgdir/usr/include"
-  cp -rfT ${_pkgname}-${pkgver}/src "$pkgdir/usr/include/openfec"
+  cp -rfT src "$pkgdir/usr/include/openfec"
   find "$pkgdir/usr/include/openfec" -type d -exec chmod 755 '{}' \;
   find "$pkgdir/usr/include/openfec" -type f -exec chmod 644 '{}' \;
   find "$pkgdir/usr/include/openfec" -type f -not -iname '*.h' -delete
