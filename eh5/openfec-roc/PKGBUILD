@@ -9,7 +9,7 @@ pkgrel=1
 pkgdesc="Open Forward Erasure Codes (ROC fork)"
 arch=('x86_64' 'i686' 'aarch64' 'armv7l' 'armv6l' 'armv7h' 'armv6h')
 url="https://github.com/roc-streaming/${_pkgname}"
-license=('CeCill')
+license=('custom:CeCill')
 depends=('glibc')
 makedepends=('git' 'cmake')
 source=("git+https://github.com/roc-streaming/openfec#tag=v${pkgver}")
