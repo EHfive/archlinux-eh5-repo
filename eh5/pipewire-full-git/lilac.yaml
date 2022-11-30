@@ -8,7 +8,6 @@ update_on:
     use_commit: true
 
 repo_depends:
-  - libcamera-minimal-git
   - liblc3-git
   - openfec-roc
   - roc-toolkit-git
