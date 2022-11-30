@@ -4,72 +4,67 @@
 
 _pkgbase=pipewire
 pkgbase=pipewire{{ label }}{{ suffix }}
-pkgname=(pipewire{{ label }}{{ suffix }}
-         pipewire{{ label }}-docs{{ suffix }}
-         pipewire{{ label }}-alsa{{ suffix }}
-         pipewire{{ label }}-jack{{ suffix }}
-         pipewire{{ label }}-pulse{{ suffix }}
-         pipewire{{ label }}-v4l2{{ suffix }}
-         pipewire{{ label }}-x11-bell{{ suffix }}
+pkgname=(
+  pipewire{{ label }}{{ suffix }}
+  pipewire{{ label }}-docs{{ suffix }}
+  pipewire{{ label }}-alsa{{ suffix }}
+  pipewire{{ label }}-jack{{ suffix }}
+  pipewire{{ label }}-pulse{{ suffix }}
+  pipewire{{ label }}-v4l2{{ suffix }}
+  pipewire{{ label }}-x11-bell{{ suffix }}
 {{# with.zeroconf }}
-         pipewire{{ label }}-zeroconf{{ suffix }}
+  pipewire{{ label }}-zeroconf{{ suffix }}
 {{/ with.zeroconf }}
 {{# with.gst }}
-         gst-plugin-pipewire{{ label }}{{ suffix }}
+  gst-plugin-pipewire{{ label }}{{ suffix }}
 {{/ with.gst }}
 {{# with.jackClient }}
-         pipewire{{ label }}-jack-client{{ suffix }}
+  pipewire{{ label }}-jack-client{{ suffix }}
 {{/ with.jackClient }}
 {{# with.vulkan }}
-         pipewire{{ label }}-vulkan{{ suffix }}
+  pipewire{{ label }}-vulkan{{ suffix }}
 {{/ with.vulkan }}
 {{# with.ffmpeg }}
-         pipewire{{ label }}-ffmpeg{{ suffix }}
+  pipewire{{ label }}-ffmpeg{{ suffix }}
 {{/ with.ffmpeg }}
 {{# with.roc }}
-         pipewire{{ label }}-roc{{ suffix }}
+  pipewire{{ label }}-roc{{ suffix }}
 {{/ with.roc }}
-{{# with.libcamera }}
-         pipewire{{ label }}-libcamera{{ suffix }}
-{{/ with.libcamera }}
-         )
+)
 pkgver=0.3.31.r2.g5497d2d9
 pkgrel=1
 pkgdesc="Low-latency audio/video router and processor"
 url="https://pipewire.org"
 license=(MIT)
 arch=(x86_64)
-makedepends=(git meson doxygen python-docutils graphviz ncurses
-             readline systemd libsndfile alsa-lib dbus rtkit libpulse
-             glib2 webrtc-audio-processing libusb bluez-libs
-             sbc libldac libfreeaptx libfdk-aac opus
-             lilv libx11 libxfixes libcanberra
+makedepends=(
+  git meson doxygen python-docutils graphviz ncurses
+  readline systemd libsndfile alsa-lib dbus rtkit libpulse
+  glib2 webrtc-audio-processing libusb bluez-libs
+  sbc libldac libfreeaptx libfdk-aac opus
+  lilv libx11 libxfixes libcanberra libcamera
 {{# with.lc3 }}
-             liblc3
+  liblc3
 {{/ with.lc3 }}
 {{# with.zeroconf }}
-             avahi openssl
+  avahi openssl
 {{/ with.zeroconf }}
 {{# with.gst }}
-             gst-plugins-base-libs
+  gst-plugins-base-libs
 {{/ with.gst }}
 {{# with.jackClient }}
-             jack2
+  jack2
 {{/ with.jackClient }}
 {{# with.vulkan }}
-             vulkan-headers vulkan-icd-loader
+  vulkan-headers vulkan-icd-loader
 {{/ with.vulkan }}
 {{# with.ffmpeg }}
-             ffmpeg
+  ffmpeg
 {{/ with.ffmpeg }}
 {{# with.roc }}
-             roc-toolkit
+  roc-toolkit
 {{/ with.roc }}
-{{# with.libcamera }}
-             libcamera-minimal-git
-             libdrm
-{{/ with.libcamera }}
-             )
+)
 source=("git+https://gitlab.freedesktop.org/pipewire/${_pkgbase}.git")
 sha256sums=('SKIP')
 
@@ -94,7 +89,7 @@ build() {
     -D jack-devel=true
     -D libjack-path=/usr/lib
     -D sdl2=disabled
-    -D session-managers=[]
+    -D session-managers='[]'
     -D test=enabled
 {{# with.lc3 }}
     -D bluez5-codec-lc3=enabled
@@ -120,9 +115,6 @@ build() {
 {{^ with.roc }}
     -D roc=disabled
 {{/ with.roc }}
-{{^ with.libcamera }}
-    -D libcamera=disabled
-{{/ with.libcamera }}
     -D udevrulesdir=/usr/lib/udev/rules.d
   )
 
@@ -149,38 +141,53 @@ _short_pkgver=${pkgver%%.r*}
 
 package_pipewire{{ label }}{{ suffix }}() {
   license+=(LGPL)
-  depends=(rtkit libdbus-1.so libncursesw.so libreadline.so
-           libsndfile.so libudev.so libasound.so libsystemd.so
-           libwebrtc_audio_processing.so libusb-1.0.so
-           libbluetooth.so libsbc.so libldacBT_{enc,abr}.so
-           libfreeaptx.so libfdk-aac.so libopus.so
+  depends=(
+    rtkit libdbus-1.so libncursesw.so libreadline.so
+    libsndfile.so libudev.so libasound.so libsystemd.so
+    libwebrtc_audio_processing.so libusb-1.0.so
+    libbluetooth.so libsbc.so libldacBT_{enc,abr}.so
+    libfreeaptx.so libfdk-aac.so libopus.so
+    liblilv-0.so
+    libcamera-base.so libcamera.so
 {{# with.lc3 }}
-           liblc3.so
+    liblc3.so
 {{/ with.lc3 }}
-           liblilv-0.so)
-  optdepends=('pipewire-session-manager: Session manager'
-              'pipewire{{ label }}-docs{{ suffix }}: Documentation'
-              'pipewire{{ label }}-alsa{{ suffix }}: ALSA configuration'
-              'pipewire{{ label }}-jack{{ suffix }}: JACK support'
+  )
+  optdepends=(
+    'pipewire-session-manager: Session manager'
+    'pipewire{{ label }}-docs{{ suffix }}: Documentation'
+    'pipewire{{ label }}-alsa{{ suffix }}: ALSA configuration'
+    'pipewire{{ label }}-jack{{ suffix }}: JACK support'
 {{# with.jackClient }}
-              'pipewire{{ label }}-jack-client{{ suffix }}: JACK device/client'
+    'pipewire{{ label }}-jack-client{{ suffix }}: JACK device/client'
 {{/ with.jackClient }}
-              'pipewire{{ label }}-pulse{{ suffix }}: PulseAudio replacement'
-              'pipewire{{ label }}-v4l2{{ suffix }}: V4L2 interceptor'
-              'pipewire{{ label }}-x11-bell{{ suffix }}: X11 bell'
+    'pipewire{{ label }}-pulse{{ suffix }}: PulseAudio replacement'
+    'pipewire{{ label }}-v4l2{{ suffix }}: V4L2 interceptor'
+    'pipewire{{ label }}-x11-bell{{ suffix }}: X11 bell'
 {{# with.zeroconf }}
-              'pipewire{{ label }}-zeroconf{{ suffix }}: Zeroconf support'
+    'pipewire{{ label }}-zeroconf{{ suffix }}: Zeroconf support'
 {{/ with.zeroconf }}
 {{# with.roc }}
-              'pipewire{{ label }}-roc{{ suffix }}: ROC support'
+    'pipewire{{ label }}-roc{{ suffix }}: ROC support'
 {{/ with.roc }}
 {{# with.gst }}
-              'gst-plugin-pipewire{{ label }}{{ suffix }}: GStreamer support'
+    'gst-plugin-pipewire{{ label }}{{ suffix }}: GStreamer support'
 {{/ with.gst }}
-              'ofono: ofono Bluetooth HFP support'
-              'hsphfpd: hsphfpd Bluetooth HSP/HFP support')
-  provides=("pipewire=$_short_pkgver" alsa-card-profiles libpipewire-$_ver.so)
-  conflicts=(pipewire alsa-card-profiles)
+    'ofono: ofono Bluetooth HFP support'
+    'hsphfpd: hsphfpd Bluetooth HSP/HFP support'
+  )
+  provides=(
+    "pipewire=$_short_pkgver" alsa-card-profiles libpipewire-$_ver.so
+{{# with.libcamera-migrate }}
+    pipewire{{ label }}-libcamera{{ suffix }}
+{{/ with.libcamera-migrate }}
+  )
+  conflicts=(
+    pipewire alsa-card-profiles
+{{# with.libcamera-migrate }}
+    pipewire{{ label }}-libcamera{{ suffix }}
+{{/ with.libcamera-migrate }}
+  )
   install=pipewire.install
 
   meson install -C build --destdir "$pkgdir"
@@ -236,10 +243,6 @@ package_pipewire{{ label }}{{ suffix }}() {
 
   _pick roc usr/lib/pipewire-$_ver/libpipewire-module-roc-{sink,source}.so
 {{/ with.roc }}
-{{# with.libcamera }}
-
-  _pick libcamera usr/lib/spa-0.2/libcamera
-{{/ with.libcamera }}
 }
 
 package_pipewire{{ label }}-docs{{ suffix }}() {
@@ -408,16 +411,3 @@ package_pipewire{{ label }}-roc{{ suffix }}() {
   install -Dt "$pkgdir/usr/share/licenses/$pkgname" -m644 $_pkgbase/COPYING
 }
 {{/ with.roc }}
-{{# with.libcamera }}
-
-package_pipewire{{ label }}-libcamera{{ suffix }}() {
-  pkgdesc="libcamera SPA plugin"
-  depends=(pipewire{{ label }}{{ suffix }} libcamera)
-  provides=(pipewire-libcamera)
-  conflicts=(pipewire-libcamera)
-
-  mv libcamera/* "${pkgdir}"
-
-  install -Dt "$pkgdir/usr/share/licenses/$pkgname" -m644 $_pkgbase/COPYING
-}
-{{/ with.libcamera }}

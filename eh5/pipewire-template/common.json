@@ -3,7 +3,7 @@
   "suffix": "-git",
   "with": {
     "lc3": false,
-    "libcamera": false,
+    "libcamera-migrate": false,
     "zeroconf": true,
     "gst": true,
     "jackClient": false,
