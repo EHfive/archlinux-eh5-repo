@@ -24,7 +24,6 @@ pkgver() {
 _run_scons() {
   local opts=(
     --prefix="${pkgdir}"/usr
-    --disable-tests --disable-examples
     --disable-pulseaudio
     --with-openfec-includes=/usr/include/openfec
   )
