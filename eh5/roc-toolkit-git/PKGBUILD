@@ -3,7 +3,7 @@
 
 _pkgname=roc-toolkit
 pkgname=${_pkgname}-git
-pkgver=0.2.0.r0.g9965fa4d
+pkgver=0.2.0.r3.g18615812
 pkgrel=1
 pkgdesc="Real-time audio streaming over network. Compiled without pulseaudio modules."
 arch=('x86_64' 'i686' 'armv6l' 'armv7l' 'aarch64' 'armv7h' 'armv6h')
