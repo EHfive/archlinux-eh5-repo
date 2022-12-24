@@ -3,8 +3,8 @@
 pkgbase=linux-firmware
 pkgname=( linux-firmware-amdgpu-pro )
 _tag=20221214
-pkgver=20220815.8413c63
-pkgrel=3
+pkgver=20221214.f3c283e
+pkgrel=1
 url="https://git.kernel.org/?p=linux/kernel/git/firmware/linux-firmware.git;a=summary"
 license=('GPL2' 'GPL3' 'custom')
 arch=('any')
