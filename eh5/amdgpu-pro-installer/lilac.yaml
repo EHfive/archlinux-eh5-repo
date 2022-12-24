@@ -6,5 +6,5 @@ update_on:
   - source: aur
     aur: amdgpu-pro-libgl
 
-pre_build_script: aur_pre_build(maintainers=['Ashark'])
+pre_build_script: aur_pre_build(maintainers=['Ashark', 'mesmer'])
 post_build_script: aur_post_build()
