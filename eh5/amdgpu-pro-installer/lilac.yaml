@@ -4,7 +4,7 @@ maintainers:
 
 update_on:
   - source: aur
-    aur: amdgpu-pro-libgl
+    aur: vulkan-amdgpu-pro
 
 pre_build_script: aur_pre_build(maintainers=['Ashark', 'mesmer'])
 post_build_script: aur_post_build()
