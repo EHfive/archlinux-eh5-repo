@@ -16,7 +16,7 @@ pkgname=(
   gst-plugin-pipewire-common-git
 )
 pkgver=0.3.63.r17.gb0853ad3
-pkgrel=1
+pkgrel=2
 pkgdesc="Low-latency audio/video router and processor"
 url="https://pipewire.org"
 license=(MIT)
