@@ -1,0 +1,17 @@
+maintainers:
+  - github: EHfive
+    email: eh5@eh5.me
+
+update_on:
+  - source: github
+    github: roc-streaming/roc-toolkit
+    use_max_tag: true
+    prefix: v
+
+repo_depends:
+  - openfec-roc
+
+pre_build_script: update_pkgver_and_pkgrel(_G.newver)
+post_build_script: |
+  git_pkgbuild_commit()
+  update_aur_repo()
