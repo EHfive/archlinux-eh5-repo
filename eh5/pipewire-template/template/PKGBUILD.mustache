@@ -62,7 +62,7 @@ makedepends=(
   ffmpeg
 {{/ with.ffmpeg }}
 {{# with.roc }}
-  roc-toolkit
+  'roc-toolkit>=0.2"
 {{/ with.roc }}
 )
 source=("git+https://gitlab.freedesktop.org/pipewire/${_pkgbase}.git")
@@ -402,7 +402,7 @@ package_pipewire{{ label }}-ffmpeg{{ suffix }}() {
 
 package_pipewire{{ label }}-roc{{ suffix }}() {
   pkgdesc+=" - ROC support"
-  depends=(pipewire{{ label }}{{ suffix }} roc-toolkit)
+  depends=(pipewire{{ label }}{{ suffix }} libroc.so)
   provides=(pipewire-roc)
   conflicts=(pipewire-roc)
 

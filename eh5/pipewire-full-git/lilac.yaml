@@ -10,4 +10,4 @@ update_on:
 repo_depends:
   - liblc3-git
   - openfec-roc
-  - roc-toolkit-git
+  - roc-toolkit
