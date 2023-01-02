@@ -19,8 +19,8 @@ pkgname=(
   pipewire-full-ffmpeg-git
   pipewire-full-roc-git
 )
-pkgver=0.3.63.r22.ga65a58d1
-pkgrel=2
+pkgver=0.3.63.r23.ged463248
+pkgrel=1
 pkgdesc="Low-latency audio/video router and processor"
 url="https://pipewire.org"
 license=(MIT)
