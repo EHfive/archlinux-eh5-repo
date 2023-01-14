@@ -26,8 +26,8 @@ source=(7206.patch
 $__pkgname-$pkgver.tar.gz::https://github.com/jp9000/obs-studio/archive/$pkgver.tar.gz
         fix_python_binary_loading.patch
         ignore_unused_submodules.patch)
-sha256sums=(87bc6bab3492002cd6aec54136b0374c98a407e5a359e1bdd3d71ca6729619b0
-'c51c72945867cd9862ba663b01cc8313153a0249dd3df0626e63fc5d82a84b39'
+sha256sums=('d146c01904b99b918f0c2fa5daaba7a188b7a1314109ddd128308e57b13a028a'
+            'c51c72945867cd9862ba663b01cc8313153a0249dd3df0626e63fc5d82a84b39'
             'bdfbd062f080bc925588aec1989bb1df34bf779cc2fc08ac27236679cf612abd'
             '60b0ee1f78df632e1a8c13cb0a7a5772b2a4b092c4a2a78f23464a7d239557c3')
 
