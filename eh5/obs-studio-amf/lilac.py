@@ -35,7 +35,7 @@ def pre_build():
         elif line.startswith('sha256sums=('):
             line = line.replace(
                 'sha256sums=(',
-                'sha256sums=(d146c01904b99b918f0c2fa5daaba7a188b7a1314109ddd128308e57b13a028a\n'
+                'sha256sums=(ab4a3b5c7cce945d65e191236a98146c42258c143048db1dc7dfec9390fc3096\n'
             )
         elif line.startswith('prepare()'):
             hasPrepare = True
