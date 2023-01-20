@@ -4,10 +4,10 @@
 pkgname=obs-studio-amf
 __pkgname=obs-studio
 conflicts=(obs-studio)
-pkgver=28.1.2
+pkgver=29.0.0
 __ver=${pkgver%%.*}
 provides=(obs-studio=$__ver)
-pkgrel=6
+pkgrel=1
 pkgdesc="Free, open source software for live streaming and recording"
 arch=('x86_64')
 url="https://obsproject.com"
@@ -26,8 +26,8 @@ source=(7206.patch
 $__pkgname-$pkgver.tar.gz::https://github.com/jp9000/obs-studio/archive/$pkgver.tar.gz
         fix_python_binary_loading.patch
         ignore_unused_submodules.patch)
-sha256sums=('d146c01904b99b918f0c2fa5daaba7a188b7a1314109ddd128308e57b13a028a'
-            'c51c72945867cd9862ba663b01cc8313153a0249dd3df0626e63fc5d82a84b39'
+sha256sums=(ab4a3b5c7cce945d65e191236a98146c42258c143048db1dc7dfec9390fc3096
+'05c5ae05a6085a792ce7fc131a92fe4a78adf90310d2d2da51a5e418720ab993'
             'bdfbd062f080bc925588aec1989bb1df34bf779cc2fc08ac27236679cf612abd'
             '60b0ee1f78df632e1a8c13cb0a7a5772b2a4b092c4a2a78f23464a7d239557c3')
 
@@ -41,11 +41,8 @@ popd
 }
 
 build() {
-  cd $__pkgname-$pkgver
-
-  mkdir -p build; cd build
-
-  cmake -DCMAKE_INSTALL_PREFIX="/usr" \
+  cmake -B build -S $__pkgname-$pkgver \
+    -DCMAKE_INSTALL_PREFIX="/usr" \
     -DENABLE_BROWSER=OFF \
     -DENABLE_VST=ON \
     -DENABLE_VLC=OFF \
@@ -53,13 +50,11 @@ build() {
     -DENABLE_AJA=OFF \
     -DENABLE_JACK=ON \
     -DENABLE_LIBFDK=ON \
-    -DOBS_VERSION_OVERRIDE="$pkgver-$pkgrel" ..
-
-  make
+    -DOBS_VERSION_OVERRIDE="$pkgver-$pkgrel" \
+    -Wno-dev
+  cmake --build build
 }
 
 package() {
-  cd $__pkgname-$pkgver/build
-
-  make install DESTDIR="$pkgdir"
+  DESTDIR="$pkgdir" cmake --install build
 }
