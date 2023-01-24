@@ -4,7 +4,7 @@
 
 _pkgname=openfec
 pkgname="${_pkgname}-roc"
-pkgver=1.4.2.5
+pkgver=1.4.2.6
 pkgrel=1
 pkgdesc="Open Forward Erasure Codes (ROC fork)"
 arch=('x86_64' 'i686' 'aarch64' 'armv7l' 'armv6l' 'armv7h' 'armv6h')
