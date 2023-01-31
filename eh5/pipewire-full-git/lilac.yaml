@@ -6,6 +6,3 @@ update_on:
   - source: git
     git: https://gitlab.freedesktop.org/pipewire/pipewire.git
     use_commit: true
-
-repo_depends:
-  - liblc3-git

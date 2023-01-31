@@ -9,6 +9,7 @@
     "jackClient": true,
     "vulkan": true,
     "ffmpeg": true,
-    "roc": true
+    "roc": true,
+    "libmysofa": true
   }
 }

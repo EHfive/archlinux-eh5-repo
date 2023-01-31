@@ -62,8 +62,11 @@ makedepends=(
   ffmpeg
 {{/ with.ffmpeg }}
 {{# with.roc }}
-  'roc-toolkit>=0.2'
+  roc-toolkit
 {{/ with.roc }}
+{{# with.libmysofa }}
+  libmysofa
+{{/ with.libmysofa}}
 )
 source=("git+https://gitlab.freedesktop.org/pipewire/${_pkgbase}.git")
 sha256sums=('SKIP')
@@ -115,6 +118,9 @@ build() {
 {{^ with.roc }}
     -D roc=disabled
 {{/ with.roc }}
+{{^ with.libmysofa }}
+    -D libmysofa=disabled
+{{/ with.libmysofa}}
     -D udevrulesdir=/usr/lib/udev/rules.d
   )
 
@@ -152,6 +158,9 @@ package_pipewire{{ label }}{{ suffix }}() {
 {{# with.lc3 }}
     liblc3.so
 {{/ with.lc3 }}
+{{# with.libmysofa }}
+    libmysofa
+{{/ with.libmysofa}}
   )
   optdepends=(
     'pipewire-session-manager: Session manager'
@@ -177,7 +186,8 @@ package_pipewire{{ label }}{{ suffix }}() {
     'hsphfpd: hsphfpd Bluetooth HSP/HFP support'
   )
   provides=(
-    "pipewire=$_short_pkgver" alsa-card-profiles libpipewire-$_ver.so
+    "pipewire=$_short_pkgver"
+    pipewire-audio alsa-card-profiles libpipewire-$_ver.so
 {{# with.libcamera-migrate }}
     pipewire{{ label }}-libcamera{{ suffix }}
 {{/ with.libcamera-migrate }}
