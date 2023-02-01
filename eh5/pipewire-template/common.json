@@ -10,6 +10,6 @@
     "vulkan": false,
     "ffmpeg": false,
     "roc": true,
-    "libmysofa": false
+    "libmysofa": true
   }
 }
