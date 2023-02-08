@@ -1,7 +1,7 @@
 # Maintainer: Jan Alexander Steffens (heftig) <heftig@archlinux.org>
 
 pkgbase=linux-zen-znver3
-pkgver=6.1.9.zen1
+pkgver=6.1.10.zen1
 _cjkver=6.0
 pkgrel=1
 pkgdesc='Linux ZEN'
