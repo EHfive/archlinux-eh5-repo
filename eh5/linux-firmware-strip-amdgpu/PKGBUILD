@@ -2,8 +2,8 @@
 
 pkgbase=linux-firmware
 pkgname=( linux-firmware-strip-amdgpu )
-_tag=20230117
-pkgver=20230117.7e4f0ed
+_tag=20230210
+pkgver=20230210.bf4115c
 pkgrel=1
 pkgdesc="Firmware files for Linux"
 url="https://git.kernel.org/?p=linux/kernel/git/firmware/linux-firmware.git;a=summary"
@@ -99,7 +99,7 @@ conflicts=( linux-firmware )
   _pick linux-firmware-marvell usr/share/licenses/${pkgname}/LICENCE.{Marvell,NXP}
 
   _pick linux-firmware-qcom usr/lib/firmware/{qcom,a300_*}
-  _pick linux-firmware-qcom usr/share/licenses/${pkgname}/LICENSE.qcom
+  _pick linux-firmware-qcom usr/share/licenses/${pkgname}/LICENSE.qcom*
 
   _pick linux-firmware-liquidio usr/lib/firmware/liquidio
   _pick linux-firmware-liquidio usr/share/licenses/${pkgname}/LICENCE.cavium_liquidio
