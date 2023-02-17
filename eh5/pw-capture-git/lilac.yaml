@@ -1,0 +1,11 @@
+maintainers:
+  - github: EHfive
+    email: eh5@eh5.me
+
+update_on:
+  - source: github
+    github: EHfive/pw-capture
+
+post_build_script: |
+  git_pkgbuild_commit()
+  update_aur_repo()
