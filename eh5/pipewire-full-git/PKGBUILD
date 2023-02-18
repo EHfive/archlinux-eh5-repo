@@ -20,7 +20,7 @@ pkgname=(
   pipewire-full-roc-git
 )
 pkgver=0.3.66.r9.g192044f1
-pkgrel=1
+pkgrel=2
 pkgdesc="Low-latency audio/video router and processor"
 url="https://pipewire.org"
 license=(MIT)
