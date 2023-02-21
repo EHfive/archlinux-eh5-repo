@@ -186,6 +186,7 @@ package_pipewire{{ label }}{{ suffix }}() {
     'hsphfpd: hsphfpd Bluetooth HSP/HFP support'
   )
   provides=(
+    "libpipewire=$_short_pkgver"
     "pipewire=$_short_pkgver"
     pipewire-audio alsa-card-profiles libpipewire-$_ver.so
 {{# with.libcamera-migrate }}
