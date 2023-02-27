@@ -1,7 +1,7 @@
 # Maintainer: Jan Alexander Steffens (heftig) <heftig@archlinux.org>
 
 pkgbase=linux-zen-znver3
-pkgver=6.2.zen1
+pkgver=6.2.1.zen1
 _cjkver=6.0
 pkgrel=1
 pkgdesc='Linux ZEN'
@@ -32,7 +32,7 @@ validpgpkeys=(
 sha256sums=('8db3be0f5ea5fcbc3c3ed219145ddeeeb787d9681ab7d935a38917482011b43f'
             '3e346785897cb55657da58829412be14a1fdb4ef6fc47bc28f3fb29eedd76a9e'
             'SKIP'
-            'ba05381ed6dd06ba24464cbf5808a67233fc52516ca88129bc458fcfd4891226')
+            'b4d2b67862848d7b889970fa1b278f9c57c4dee0d0061c643d3fb200c6d3bfa2')
 
 export KBUILD_BUILD_HOST=archlinux
 export KBUILD_BUILD_USER=$pkgbase
