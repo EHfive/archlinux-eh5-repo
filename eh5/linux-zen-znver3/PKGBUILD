@@ -1,7 +1,7 @@
 # Maintainer: Jan Alexander Steffens (heftig) <heftig@archlinux.org>
 
 pkgbase=linux-zen-znver3
-pkgver=6.2.2.zen2
+pkgver=6.2.3.zen2
 _cjkver=6.0
 pkgrel=1
 pkgdesc='Linux ZEN'
@@ -11,7 +11,7 @@ arch=(x86_64)
 license=(GPL2)
 makedepends=(
   bc libelf pahole cpio perl tar xz
-  xmlto python-sphinx python-sphinx_rtd_theme graphviz imagemagick texlive-latexextra
+  xmlto python-sphinx graphviz imagemagick texlive-latexextra
   git
 )
 options=('!strip')
@@ -32,7 +32,7 @@ validpgpkeys=(
 sha256sums=('8db3be0f5ea5fcbc3c3ed219145ddeeeb787d9681ab7d935a38917482011b43f'
             '3e346785897cb55657da58829412be14a1fdb4ef6fc47bc28f3fb29eedd76a9e'
             'SKIP'
-            '3ac0b8f5e578a33feb071063cae375d7e5334f7510caa3a4c89c4e1c83e14fdb')
+            'cb6eacccf0bfb9b0459fb12846d0ba190a9ef5732d4bacb52ce43484c423d55d')
 
 export KBUILD_BUILD_HOST=archlinux
 export KBUILD_BUILD_USER=$pkgbase
