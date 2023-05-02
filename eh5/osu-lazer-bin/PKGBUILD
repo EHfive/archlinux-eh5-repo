@@ -1,0 +1,50 @@
+# Maintainer: Huang-Huang Bao <eh5@sokka.cn>
+
+pkgname=osu-lazer-bin
+pkgver=2023.419.0
+pkgrel=2
+pkgdesc="A free-to-win rhythm game. Rhythm is just a *click* away!"
+arch=(x86_64)
+url="https://osu.ppy.sh"
+license=("MIT" "custom:CC-BY-NC 4.0")
+depends=(
+  ffmpeg
+  libgl
+)
+provides=(osu-lazer)
+conflicts=(osu-lazer)
+options=(!strip !debug)
+source=(
+  "osu-$pkgver.AppImage::https://github.com/ppy/osu/releases/download/$pkgver/osu.AppImage"
+  "https://raw.githubusercontent.com/ppy/osu-resources/master/LICENCE.md"
+  "osu-lazer.desktop"
+  "osu-lazer.xml"
+  "osu-lazer"
+)
+noextract=("osu.AppImage")
+sha256sums=('bfea7e20e68785bff082a99e48eefcaea2d02cf1ad08e119063f88de8647f4dd'
+            '30b914824784b6ba6b30a44b22bea4f3c6fbc10f3f0e74fde5ca76a92ef57244'
+            'c91c4838496db0dd96c41afa760213cae5d61ef279399b260249c8e947763aaf'
+            '32040d5b44699c46130b4ca6eb007c700e9af060840f58a0b233ad1cf5cd655a'
+            '40ad17d0fb38f3a82de1ebce8b1413419c41aa72686b64486579b7d0df0bcd9b')
+
+package() {
+  cd "$srcdir"
+  chmod +x "osu-$pkgver.AppImage"
+  ./"osu-$pkgver.AppImage" --appimage-extract
+
+  pushd squashfs-root
+
+  mkdir -p "$pkgdir/opt/osu-lazer/"
+  cp -r usr/bin/. "$pkgdir/opt/osu-lazer/"
+
+  install -Dm644 -T osu!.png "$pkgdir/usr/share/pixmaps/osu-lazer.png"
+
+  popd
+
+  install -Dm755 -t "$pkgdir/usr/bin" osu-lazer
+
+  install -Dm644 -t "$pkgdir/usr/share/applications/" osu-lazer.desktop
+  install -Dm644 -t "$pkgdir/usr/share/mime/packages/" osu-lazer.xml
+  install -Dm644 -t "$pkgdir/usr/share/licenses/$pkgname/" LICENCE.md
+}

@@ -1,0 +1,3 @@
+#!/bin/sh
+export COMPlus_GCGen0MaxBudget=600000
+exec /opt/osu-lazer/osu! "$@"
