@@ -55,10 +55,10 @@ def pre_build():
                 '"cjktty.patch::https://github.com/zhmars/cjktty-patches/raw/master/v${_cjkver%.*}.x/cjktty-${_cjkver}.patch"\n' +
                 '"https://github.com/zhmars/cjktty-patches/raw/master/cjktty-add-cjk32x32-font-data.patch"\n'
             ))
-        elif line.startswith('sha256sums=('):
+        elif line.startswith('b2sums=('):
             line = line.replace(
-                'sha256sums=(',
-                'sha256sums=(SKIP\nSKIP\n'
+                'b2sums=(',
+                'b2sums=(SKIP\nSKIP\n'
             )
         elif 'make htmldocs all' in line:
             line = 'make all'
