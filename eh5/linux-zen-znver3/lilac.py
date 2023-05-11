@@ -48,7 +48,7 @@ def pre_build():
         elif line.startswith('pkgname=('):
             line = line.replace('"$pkgbase-docs"', '')
         elif line.startswith('pkgver='):
-            line = line + '\n_cjkver=6.0'
+            line = line + '\n_cjkver=6.3'
         elif line.startswith('source=('):
             line = line.replace('source=(', (
                 'source=(\n' +
