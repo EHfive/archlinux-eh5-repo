@@ -47,19 +47,19 @@ def pre_build():
             line = "pkgbase=linux-zen-znver3"
         elif line.startswith('pkgname=('):
             line = line.replace('"$pkgbase-docs"', '')
-        elif line.startswith('pkgver='):
-            line = line + '\n_cjkver=6.3'
-        elif line.startswith('source=('):
-            line = line.replace('source=(', (
-                'source=(\n' +
-                '"cjktty.patch::https://github.com/zhmars/cjktty-patches/raw/master/v${_cjkver%.*}.x/cjktty-${_cjkver}.patch"\n' +
-                '"https://github.com/zhmars/cjktty-patches/raw/master/cjktty-add-cjk32x32-font-data.patch"\n'
-            ))
-        elif line.startswith('b2sums=('):
-            line = line.replace(
-                'b2sums=(',
-                'b2sums=(SKIP\nSKIP\n'
-            )
+        # elif line.startswith('pkgver='):
+        #     line = line + '\n_cjkver=6.3'
+        # elif line.startswith('source=('):
+        #     line = line.replace('source=(', (
+        #         'source=(\n' +
+        #         '"cjktty.patch::https://github.com/zhmars/cjktty-patches/raw/master/v${_cjkver%.*}.x/cjktty-${_cjkver}.patch"\n' +
+        #         '"https://github.com/zhmars/cjktty-patches/raw/master/cjktty-add-cjk32x32-font-data.patch"\n'
+        #     ))
+        # elif line.startswith('b2sums=('):
+        #     line = line.replace(
+        #         'b2sums=(',
+        #         'b2sums=(SKIP\nSKIP\n'
+        #     )
         elif 'make htmldocs all' in line:
             line = 'make all'
         print(line)
