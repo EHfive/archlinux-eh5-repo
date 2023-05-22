@@ -5,42 +5,11 @@ from lilaclib import *
 
 g = SimpleNamespace()
 
-def _download_official_pkgbuild_trunk(name: str) -> List[str]:
-  url = 'https://archlinux.org/packages/search/json/?name=' + name
-  logger.info('download PKGBUILD for %s.', name)
-  info = s.get(url).json()
-  r = [r for r in info['results'] if r['repo'] != 'testing'][0]
-  repo = r['repo']
-  if repo in ('core', 'extra'):
-    gitrepo = 'packages'
-  else:
-    gitrepo = 'community'
-  pkgbase = [r['pkgbase'] for r in info['results'] if r['repo'] != 'testing'][0]
-
-  tarball_url = 'https://github.com/archlinux/svntogit-%s/archive/refs/heads/packages/%s.tar.gz' % (gitrepo, pkgbase)
-  logger.debug('downloading Arch package tarball from: %s', tarball_url)
-  tarball = s.get(tarball_url).content
-  path = f'svntogit-{gitrepo}-packages-{pkgbase}/trunk'
-  files = []
-
-  with tarfile.open(
-    name=f"{pkgbase}.tar.gz", mode="r:gz", fileobj=io.BytesIO(tarball)
-  ) as tarf:
-    for tarinfo in tarf:
-      dirname, filename = os.path.split(tarinfo.name)
-      if dirname != path:
-        continue
-      tarinfo.name = filename
-      logger.debug('extract file %s.', filename)
-      tarf.extract(tarinfo)
-      files.append(filename)
-
-  return files
 
 def pre_build():
-    g.files = _download_official_pkgbuild_trunk('linux-zen')
+    g.files = download_official_pkgbuild('linux-zen')
 
-    run_protected(['patch', '-N', 'config', 'config.patch' ])
+    run_protected(['patch', '-N', 'config', 'config.patch'])
 
     for line in edit_file('PKGBUILD'):
         if line.startswith('pkgbase='):
