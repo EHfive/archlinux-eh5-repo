@@ -43,6 +43,7 @@ makedepends=(
   glib2 webrtc-audio-processing libusb bluez-libs
   sbc libldac libfreeaptx libfdk-aac opus
   lilv libx11 libxfixes libcanberra libcamera
+  libffado
 {{# with.lc3 }}
   liblc3
 {{/ with.lc3 }}
@@ -155,6 +156,7 @@ package_pipewire{{ label }}{{ suffix }}() {
     libfreeaptx.so libfdk-aac.so libopus.so
     liblilv-0.so
     libcamera-base.so libcamera.so
+    libffado.so
 {{# with.lc3 }}
     liblc3.so
 {{/ with.lc3 }}
