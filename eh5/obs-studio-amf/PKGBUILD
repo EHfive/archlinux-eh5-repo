@@ -4,17 +4,18 @@
 pkgname=obs-studio-amf
 __pkgname=obs-studio
 conflicts=(obs-studio)
-pkgver=29.0.2
+pkgver=29.1.2
 __ver=${pkgver%%.*}
 provides=(obs-studio=$__ver)
-pkgrel=5
+pkgrel=1
 pkgdesc="Free, open source software for live streaming and recording"
 arch=('x86_64')
 url="https://obsproject.com"
 license=('GPL2')
 depends=('ffmpeg' 'jansson' 'libxinerama' 'libxkbcommon-x11' 'mbedtls' 'rnnoise' 'pciutils'
          'qt6-svg' 'curl' 'jack' 'gtk-update-icon-cache' 'pipewire' 'libxcomposite')
-makedepends=('cmake' 'libfdk-aac' 'x264' 'swig' 'python' 'luajit' 'sndio')
+makedepends=(amf-headers
+'cmake' 'libfdk-aac' 'x264' 'swig' 'python' 'luajit' 'sndio')
 optdepends=('libfdk-aac: FDK AAC codec support'
             'libva-intel-driver: hardware encoding'
             'libva-mesa-driver: hardware encoding'
@@ -25,13 +26,11 @@ optdepends=('libfdk-aac: FDK AAC codec support'
 source=(7206.patch
 $__pkgname-$pkgver.tar.gz::https://github.com/jp9000/obs-studio/archive/$pkgver.tar.gz
         fix_python_binary_loading.patch
-        ignore_unused_submodules.patch
-        https://github.com/obsproject/obs-studio/commit/2e79d4c9.patch)
+        ignore_unused_submodules.patch)
 sha256sums=(SKIP
-'0e6260800b80c3fc9f67c4c3fb12ffae740ab1dd188e526a55e0fc8949168db2'
+'215f1fa5772c5dd9f3d6e35b0cb573912b00320149666a77864f9d305525504b'
             'bdfbd062f080bc925588aec1989bb1df34bf779cc2fc08ac27236679cf612abd'
-            '60b0ee1f78df632e1a8c13cb0a7a5772b2a4b092c4a2a78f23464a7d239557c3'
-            '96ea913149377b324d132aa56964a72e5263e06a8b8d2103c1708b04752f3b9d')
+            '60b0ee1f78df632e1a8c13cb0a7a5772b2a4b092c4a2a78f23464a7d239557c3')
 
 prepare() {
 pushd $__pkgname-$pkgver
@@ -40,7 +39,6 @@ popd
   cd $__pkgname-$pkgver
   patch -Np1 < "$srcdir"/fix_python_binary_loading.patch
   patch -Np1 < "$srcdir"/ignore_unused_submodules.patch
-  patch -Np1 < "$srcdir"/2e79d4c9.patch # Fix build with FFmpeg 6
 }
 
 build() {
