@@ -30,6 +30,8 @@ def pre_build():
                 '\n__ver=${pkgver%%.*}\n' +
                 'provides=(obs-studio=$__ver)'
             )
+        elif line.startswith('makedepends=('):
+            line = line.replace('makedepends=(', 'makedepends=(amf-headers\n')
         elif line.startswith('source=('):
             line = line.replace('source=(', 'source=(7206.patch\n')
         elif line.startswith('sha256sums=('):
