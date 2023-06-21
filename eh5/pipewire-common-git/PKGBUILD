@@ -16,7 +16,7 @@ pkgname=(
   gst-plugin-pipewire-common-git
   pipewire-common-roc-git
 )
-pkgver=0.3.71.r139.gf2ba4caa
+pkgver=0.3.71.r152.g85af2bde
 pkgrel=1
 pkgdesc="Low-latency audio/video router and processor"
 url="https://pipewire.org"
