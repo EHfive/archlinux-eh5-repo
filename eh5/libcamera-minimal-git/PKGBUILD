@@ -3,7 +3,7 @@
 _pkgbase=libcamera
 pkgbase=libcamera-minimal-git
 pkgname=(libcamera-minimal-git)
-pkgver=0.1.0.r9.ga2eadc40
+pkgver=0.1.0.r12.g09dd6544
 pkgrel=1
 pkgdesc="An open source camera stack and framework for Linux, Android, and ChromeOS"
 url="https://libcamera.org"
