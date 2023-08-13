@@ -2,14 +2,8 @@
   "label": "-common",
   "suffix": "-git",
   "with": {
-    "lc3": true,
-    "libcamera-migrate": false,
-    "zeroconf": true,
-    "gst": true,
     "jackClient": false,
     "vulkan": false,
-    "ffmpeg": false,
-    "roc": true,
-    "libmysofa": true
+    "ffmpeg": false
   }
 }
