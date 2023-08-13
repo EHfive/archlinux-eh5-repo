@@ -1,8 +1,0 @@
-maintainers:
-  - github: EHfive
-    email: eh5@eh5.me
-
-update_on:
-  - source: archpkg
-    archpkg: obs-studio
-  - alias: python
