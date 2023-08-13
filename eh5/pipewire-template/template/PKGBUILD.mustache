@@ -70,9 +70,6 @@ makedepends=(
   systemd
   valgrind
   webrtc-audio-processing
-{{# with.jackClient }}
-  jack2
-{{/ with.jackClient }}
 {{# with.vulkan }}
   vulkan-headers vulkan-icd-loader
 {{/ with.vulkan }}
@@ -88,8 +85,16 @@ checkdepends=(
 )
 source=(
   "git+https://gitlab.freedesktop.org/pipewire/pipewire.git"
+{{# with.jackClient }}
+  jack-link-pipewire-jack.patch
+{{/ with.jackClient }}
 )
-b2sums=('SKIP')
+b2sums=(
+  'SKIP'
+{{# with.jackClient }}
+  ae382ddfabc511d9c8f48b0355fc3871caf9fd2bb085bf60e8dd8af2aa4bc646531aed115898ce3bb0f6208534a8fbb72a4cecbdfa719ffd7f22d7fefcb6153b
+{{/ with.jackClient }}
+)
 
 pkgver() {
   cd pipewire
@@ -99,6 +104,12 @@ pkgver() {
 prepare() {
   cd pipewire
 
+{{# with.jackClient }}
+  # use internal jack headers and library in build stage,
+  # libspa-jack.so would still link to /usr/lib/libjack.so,
+  # which provided by both pipewire-jack and jack2,
+  patch -Np1 < ../jack-link-pipewire-jack.patch
+{{/ with.jackClient }}
   # remove export of LD_LIBRARY_PATH for pw-jack as it would add /usr/lib
   sed -i '/LD_LIBRARY_PATH/d' pipewire-jack/src/pw-jack.in
 }
@@ -115,6 +126,9 @@ build() {
     -D rlimits-install=false
     -D session-managers=[]
     -D udevrulesdir=/usr/lib/udev/rules.d
+{{# with.jackClient }}
+    -D jack-link-pipewire-jack=enabled
+{{/ with.jackClient }}
 {{^ with.jackClient }}
     -D jack=disabled
 {{/ with.jackClient }}
@@ -546,7 +560,7 @@ package_pipewire{{ label }}-x11-bell{{ suffix }}() {
 
 package_pipewire{{ label }}-jack-client{{ suffix }}() {
   pkgdesc="JACK client SPA plugin"
-  depends=(libjack.so)
+  depends=(libjack.so libpipewire-$_ver.so)
   provides=(pipewire-jack-client)
   conflicts=(pipewire-jack-client)
 
