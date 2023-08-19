@@ -11,10 +11,17 @@ def pre_build():
 
     run_protected(['patch', '-N', 'config', 'config.patch'])
 
+    doc_deps = [
+        'graphviz',
+        'imagemagick',
+        'python-sphinx',
+        'texlive-latexextra'
+    ]
+
     for line in edit_file('PKGBUILD'):
         if line.startswith('pkgbase='):
             line = "pkgbase=linux-zen-znver3"
-        elif line.startswith('pkgname=('):
+        elif '"$pkgbase-docs"' in line:
             line = line.replace('"$pkgbase-docs"', '')
         # elif line.startswith('pkgver='):
         #     line = line + '\n_cjkver=6.3'
@@ -29,8 +36,13 @@ def pre_build():
         #         'b2sums=(',
         #         'b2sums=(SKIP\nSKIP\n'
         #     )
-        elif 'make htmldocs all' in line:
-            line = 'make all'
+        elif '_make htmldocs' in line:
+            line = ''
+        else
+        for dep in doc_deps:
+            if dep in line:
+                line.replace(dep, '')
+
         print(line)
 
     pkgver, _ = get_pkgver_and_pkgrel()
