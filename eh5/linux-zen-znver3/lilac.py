@@ -38,10 +38,10 @@ def pre_build():
         #     )
         elif '_make htmldocs' in line:
             line = ''
-        else
-        for dep in doc_deps:
-            if dep in line:
-                line.replace(dep, '')
+        else:
+            for dep in doc_deps:
+                if dep in line:
+                    line = line.replace(dep, '')
 
         print(line)
 
