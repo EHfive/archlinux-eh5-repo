@@ -196,9 +196,6 @@ package_pipewire{{ label }}{{ suffix }}() {
     'pipewire{{ label }}-docs{{ suffix }}: Documentation'
     'pipewire{{ label }}-ffado{{ suffix }}: FireWire support'
     'pipewire{{ label }}-jack{{ suffix }}: JACK support'
-{{# with.jackClient }}
-    'pipewire{{ label }}-jack-client{{ suffix }}: JACK device/client'
-{{/ with.jackClient }}
     'pipewire{{ label }}-pulse{{ suffix }}: PulseAudio replacement'
     'pipewire{{ label }}-roc{{ suffix }}: ROC streaming'
     'pipewire-session-manager: Session manager'
@@ -357,9 +354,6 @@ package_pipewire{{ label }}-audio{{ suffix }}() {
 {{# with.ffmpeg }}
     libavcodec.so libavformat.so libavutil.so
 {{/ with.ffmpeg }}
-{{# with.modemManager }}
-    modemmanager
-{{/ with.modemManager }}
   )
 
   mv audio/* "$pkgdir"
