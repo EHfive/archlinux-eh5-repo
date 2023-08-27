@@ -2,7 +2,7 @@
 
 pkgbase=linux-zen-znver3
 pkgver=6.4.12.zen1
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux ZEN'
 _srctag=v${pkgver%.*}-${pkgver##*.}
 url="https://github.com/zen-kernel/zen-kernel/commits/$_srctag"
@@ -19,6 +19,12 @@ makedepends=(
   python
   tar
   xz
+
+  # htmldocs
+  
+  
+  
+  
 )
 options=('!strip')
 _srcname=zen-kernel
@@ -74,6 +80,7 @@ prepare() {
 build() {
   cd $_srcname
   _make all
+
 }
 
 _package() {
