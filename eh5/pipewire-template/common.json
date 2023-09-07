@@ -1,9 +1,5 @@
 {
   "label": "-common",
   "suffix": "-git",
-  "with": {
-    "jackClient": false,
-    "vulkan": false,
-    "ffmpeg": false
-  }
+  "with": {}
 }

@@ -69,7 +69,7 @@ makedepends=(
   sdl2
   systemd
   valgrind
-  webrtc-audio-processing
+  webrtc-audio-processing-1
 {{# with.vulkan }}
   vulkan-headers vulkan-icd-loader
 {{/ with.vulkan }}
@@ -347,7 +347,7 @@ package_pipewire{{ label }}-audio{{ suffix }}() {
     libsbc.so
     libsndfile.so
     libusb-1.0.so
-    libwebrtc_audio_processing.so
+    libwebrtc_audio_processing-1.so
     pipewire
     systemd-libs
     libpipewire{{ label }}{{ suffix }}
