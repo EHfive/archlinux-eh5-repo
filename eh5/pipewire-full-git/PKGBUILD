@@ -22,7 +22,7 @@ pkgname=(
   pipewire-full-vulkan-git
   pipewire-full-ffmpeg-git
 )
-pkgver=0.3.80.r6.g3c5da117
+pkgver=0.3.80.r20.g71808454
 pkgrel=1
 pkgdesc="Low-latency audio/video router and processor"
 url="https://pipewire.org"
