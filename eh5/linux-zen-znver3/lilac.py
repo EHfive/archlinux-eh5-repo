@@ -36,7 +36,7 @@ def pre_build():
         #         'b2sums=(',
         #         'b2sums=(SKIP\nSKIP\n'
         #     )
-        elif '_make htmldocs' in line:
+        elif 'make htmldocs' in line:
             line = ''
         else:
             for dep in doc_deps:
