@@ -19,7 +19,7 @@ pkgname=(
   pipewire-common-v4l2-git
   pipewire-common-x11-bell-git
 )
-pkgver=0.3.81.r16.g69baef16
+pkgver=0.3.81.r33.g4b940100
 pkgrel=1
 pkgdesc="Low-latency audio/video router and processor"
 url="https://pipewire.org"
