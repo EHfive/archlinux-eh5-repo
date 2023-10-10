@@ -104,15 +104,13 @@ pkgver() {
 
 prepare() {
   cd pipewire
-
 {{# with.jackClient }}
+
   # use internal jack headers and library in build stage,
   # libspa-jack.so would still link to /usr/lib/libjack.so,
   # which provided by both pipewire-jack and jack2,
   patch -Np1 < ../jack-link-pipewire-jack.patch
 {{/ with.jackClient }}
-  # remove export of LD_LIBRARY_PATH for pw-jack as it would add /usr/lib
-  sed -i '/LD_LIBRARY_PATH/d' pipewire-jack/src/pw-jack.in
 }
 
 build() {
