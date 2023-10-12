@@ -125,6 +125,7 @@ build() {
     -D rlimits-install=false
     -D session-managers=[]
     -D udevrulesdir=/usr/lib/udev/rules.d
+    -D selinux=disabled
 {{# with.jackClient }}
     -D jack-link-pipewire-jack=enabled
 {{/ with.jackClient }}
