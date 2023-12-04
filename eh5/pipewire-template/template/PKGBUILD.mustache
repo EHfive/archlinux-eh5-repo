@@ -100,13 +100,11 @@ pkgver() {
 
 prepare() {
   cd pipewire
-{{# with.jackClient }}
 
   # use internal jack headers and library in build stage,
   # libspa-jack.so would still link to /usr/lib/libjack.so,
   # which provided by both pipewire-jack and jack2,
   patch -Np1 < ../jack-link-pipewire-jack.patch
-{{/ with.jackClient }}
 }
 
 build() {
@@ -123,12 +121,8 @@ build() {
     -D session-managers=[]
     -D udevrulesdir=/usr/lib/udev/rules.d
     -D selinux=disabled
-{{# with.jackClient }}
     -D jack-link-pipewire-jack=enabled
-{{/ with.jackClient }}
-{{^ with.jackClient }}
     -D jack=disabled
-{{/ with.jackClient }}
 {{# with.vulkan }}
     -D vulkan=enabled
 {{/ with.vulkan }}
