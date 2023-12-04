@@ -443,8 +443,17 @@ package_pipewire{{ label }}-pulse{{ suffix }}() {
     pipewire-session-manager
     systemd-libs
   )
-  provides=(pulseaudio pulseaudio-bluetooth pipewire-pulse)
-  conflicts=(pulseaudio pulseaudio-bluetooth pipewire-pulse)
+  provides=(
+    pulse-native-provider
+    pulseaudio
+    pulseaudio-bluetooth
+    pipewire-pulse
+  )
+  conflicts=(
+    pulseaudio
+    pulseaudio-bluetooth
+    pipewire-pulse
+  )
   install=pipewire-pulse.install
 
   mv pulse/* "$pkgdir"
