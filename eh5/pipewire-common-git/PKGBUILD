@@ -20,7 +20,7 @@ pkgname=(
   pipewire-common-v4l2-git
   pipewire-common-x11-bell-git
 )
-pkgver=1.0.0.r131.g10d3c547
+pkgver=1.0.0.r132.g03173530
 _so_ver=0.3
 _short_pkgver=${pkgver%%.r*}
 pkgrel=1
