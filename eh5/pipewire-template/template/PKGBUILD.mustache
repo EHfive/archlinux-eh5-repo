@@ -115,6 +115,7 @@ build() {
     -D session-managers=[]
     -D udevrulesdir=/usr/lib/udev/rules.d
     -D selinux=disabled
+    -S snap=disabled
 {{# with.vulkan }}
     -D vulkan=enabled
 {{/ with.vulkan }}
