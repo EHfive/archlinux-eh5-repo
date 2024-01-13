@@ -9,5 +9,8 @@ update_on:
   #   include_regex: 'v[0-9.]+-zen[0-9]'
   #   from_pattern: 'v([0-9.]+)-(zen[0-9])'
   #   to_pattern: '\1.\2'
+  - source: git
+    git: https://gitlab.archlinux.org/archlinux/packaging/packages/linux-zen.git
+    use_commit: true
   - source: archpkg
     archpkg: linux-zen

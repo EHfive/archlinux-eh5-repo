@@ -73,7 +73,7 @@ def pre_build():
         print(line)
 
     pkgver, _ = get_pkgver_and_pkgrel()
-    if pyalpm.vercmp(_G.newver, pkgver) > 0:
+    if False and pyalpm.vercmp(_G.newver, pkgver) > 0:
         update_pkgver_and_pkgrel(_G.newver, updpkgsums=True)
     else:
         run_protected(["updpkgsums"])
