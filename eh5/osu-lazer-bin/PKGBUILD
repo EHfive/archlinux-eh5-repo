@@ -1,7 +1,7 @@
 # Maintainer: Huang-Huang Bao <eh5@sokka.cn>
 
 pkgname=osu-lazer-bin
-pkgver=2024.114.0
+pkgver=2024.130.2
 pkgrel=1
 pkgdesc="A free-to-win rhythm game. Rhythm is just a *click* away!"
 arch=(x86_64)
@@ -22,7 +22,7 @@ source=(
   "osu-lazer"
 )
 noextract=("osu.AppImage")
-sha256sums=('4ccfb1f93dc42f6f04adae5e4519a19ee9c5f1aa09dabea84d3be3343d3ca7d2'
+sha256sums=('e0d1bfde51ea4157cd6baccc13f1c3f66fdb12457bf55bbae3e68c0e008aab0d'
             '30b914824784b6ba6b30a44b22bea4f3c6fbc10f3f0e74fde5ca76a92ef57244'
             'c91c4838496db0dd96c41afa760213cae5d61ef279399b260249c8e947763aaf'
             '32040d5b44699c46130b4ca6eb007c700e9af060840f58a0b233ad1cf5cd655a'
