@@ -5,33 +5,36 @@ from lilaclib import *
 
 g = SimpleNamespace()
 
+
 def download_latest_pkgbuild(name: str) -> list[str]:
-  url = 'https://archlinux.org/packages/search/json/?name=' + name
-  logger.info('download PKGBUILD for %s.', name)
-  info = s.get(url).json()
-  pkgbase = [r['pkgbase'] for r in info['results']][0]
+    url = 'https://archlinux.org/packages/search/json/?name=' + name
+    logger.info('download PKGBUILD for %s.', name)
+    info = s.get(url).json()
+    pkgbase = [r['pkgbase'] for r in info['results']][0]
 
-  tarball_url = 'https://gitlab.archlinux.org/archlinux/packaging/packages/{0}/-/archive/main/{0}-main.tar.bz2'.format(pkgbase)
-  logger.debug('downloading Arch package tarball from: %s', tarball_url)
-  tarball = s.get(tarball_url).content
-  path = f'{pkgbase}-main'
-  files = []
+    tarball_url = 'https://gitlab.archlinux.org/archlinux/packaging/packages/{0}/-/archive/main/{0}-main.tar.bz2'.format(
+        pkgbase)
+    logger.debug('downloading Arch package tarball from: %s', tarball_url)
+    tarball = s.get(tarball_url).content
+    path = f'{pkgbase}-main'
+    files = []
 
-  with tarfile.open(
-    name=f"{pkgbase}-main.tar.bz2", fileobj=io.BytesIO(tarball)
-  ) as tarf:
-    for tarinfo in tarf:
-      dirname, filename = os.path.split(tarinfo.name)
-      if dirname != path:
-        continue
-      if filename in ('.SRCINFO', '.gitignore'):
-        continue
-      tarinfo.name = filename
-      logger.debug('extract file %s.', filename)
-      tarf.extract(tarinfo)
-      files.append(filename)
+    with tarfile.open(
+        name=f"{pkgbase}-main.tar.bz2", fileobj=io.BytesIO(tarball)
+    ) as tarf:
+        for tarinfo in tarf:
+            dirname, filename = os.path.split(tarinfo.name)
+            if dirname != path:
+                continue
+            if filename in ('.SRCINFO', '.gitignore'):
+                continue
+            tarinfo.name = filename
+            logger.debug('extract file %s.', filename)
+            tarf.extract(tarinfo)
+            files.append(filename)
 
-  return files
+    return files
+
 
 def pre_build():
     g.files = download_latest_pkgbuild('linux-zen')
@@ -63,6 +66,8 @@ def pre_build():
         #         'b2sums=(',
         #         'b2sums=(SKIP\nSKIP\n'
         #     )
+        elif line.startswith('makedepends=('):
+            line = line.replace('makedepends=(', 'makedepends=(llvm ')
         elif 'make htmldocs' in line:
             line = ''
         else:
