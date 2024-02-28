@@ -3,7 +3,7 @@
 _pkgbase=liblc3
 pkgbase=liblc3-git
 pkgname=(liblc3-git)
-pkgver=1.0.4.r27.ge67bb2d
+pkgver=1.0.4.r30.g9981509
 pkgrel=1
 pkgdesc="Low Complexity Communication Codec (LC3)"
 url="https://github.com/google/${_pkgbase}"
