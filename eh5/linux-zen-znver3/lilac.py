@@ -60,7 +60,7 @@ def pre_build():
                 'source=(\n' +
                 # '"cjktty.patch::https://github.com/zhmars/cjktty-patches/raw/master/v${_cjkver%.*}.x/cjktty-${_cjkver}.patch"\n' +
                 # '"https://github.com/zhmars/cjktty-patches/raw/master/cjktty-add-cjk32x32-font-data.patch"\n'
-                'skip-pahole.patch\n'
+                'pahole-use-llvm-objcopy.patch\n'
             ))
         elif line.startswith('b2sums=('):
             line = line.replace(
@@ -68,8 +68,8 @@ def pre_build():
                 # 'b2sums=(SKIP\nSKIP\n'
                 'b2sums=(SKIP\n'
             )
-        # elif line.startswith('makedepends=('):
-        #     line = line.replace('makedepends=(', 'makedepends=(llvm ')
+        elif line.startswith('makedepends=('):
+            line = line.replace('makedepends=(', 'makedepends=(llvm ')
         elif line.startswith('validpgpkeys'):
             line = line.replace('validpgpkeys', '_validpgpkeys')
         elif line.startswith('sha256sums'):
