@@ -14,3 +14,5 @@ update_on:
     use_commit: true
   - source: archpkg
     archpkg: linux-zen
+
+managed: false
