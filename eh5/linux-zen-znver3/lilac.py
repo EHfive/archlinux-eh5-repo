@@ -45,6 +45,7 @@ def pre_build():
         'graphviz',
         'imagemagick',
         'python-sphinx',
+        "python-yaml",
         'texlive-latexextra'
     ]
 
@@ -55,12 +56,13 @@ def pre_build():
             line = line.replace('"$pkgbase-docs"', '')
         # elif line.startswith('pkgver='):
         #     line = line + '\n_cjkver=6.3'
-        # elif line.startswith('source=('):
-        #     line = line.replace('source=(', (
-        #         'source=(\n' +
-        #         '"cjktty.patch::https://github.com/zhmars/cjktty-patches/raw/master/v${_cjkver%.*}.x/cjktty-${_cjkver}.patch"\n' +
-        #         '"https://github.com/zhmars/cjktty-patches/raw/master/cjktty-add-cjk32x32-font-data.patch"\n'
-        #     ))
+        elif line.startswith('source=('):
+            line = line.replace('source=(', (
+                'source=(\n' +
+                # '"cjktty.patch::https://github.com/zhmars/cjktty-patches/raw/master/v${_cjkver%.*}.x/cjktty-${_cjkver}.patch"\n' +
+                # '"https://github.com/zhmars/cjktty-patches/raw/master/cjktty-add-cjk32x32-font-data.patch"\n'
+                '"https://github.com/bluez/bluetooth-next/commit/5fe0be8868aaa96fdd31bab5cfef079bf89a3fa2.patch"\n'
+            ))
         # elif line.startswith('b2sums=('):
         #     line = line.replace(
         #         'b2sums=(',
@@ -85,8 +87,8 @@ def pre_build():
     else:
         run_protected(["updpkgsums"])
 
-    g.files.append('cjktty.patch')
-    g.files.append('cjktty-add-cjk32x32-font-data.patch')
+    # g.files.append('cjktty.patch')
+    # g.files.append('cjktty-add-cjk32x32-font-data.patch')
 
 
 def post_build():
