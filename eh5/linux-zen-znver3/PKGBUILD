@@ -1,8 +1,8 @@
 # Maintainer: Jan Alexander Steffens (heftig) <heftig@archlinux.org>
 
 pkgbase=linux-zen-znver3
-pkgver=6.9.5.zen1
-pkgrel=2
+pkgver=6.9.6.zen1
+pkgrel=1
 pkgdesc='Linux ZEN'
 url='https://github.com/zen-kernel/zen-kernel'
 arch=(x86_64)
@@ -32,8 +32,6 @@ options=(
 _srcname=linux-${pkgver%.*}
 _srctag=v${pkgver%.*}-${pkgver##*.}
 source=(
-"https://github.com/bluez/bluetooth-next/commit/5fe0be8868aaa96fdd31bab5cfef079bf89a3fa2.patch"
-
   https://cdn.kernel.org/pub/linux/kernel/v${pkgver%%.*}.x/${_srcname}.tar.{xz,sign}
   $url/releases/download/$_srctag/linux-$_srctag.patch.zst{,.sig}
   config  # the main kernel config file
@@ -44,18 +42,16 @@ validpgpkeys=(
   83BC8889351B5DEBBB68416EB8AC08600F108CDF  # Jan Alexander Steffens (heftig)
 )
 # https://www.kernel.org/pub/linux/kernel/v6.x/sha256sums.asc
-sha256sums=('481dda5d4af9a9db119dadb4f2e2ef85d740332e1490fb666fa8e994328525f0'
-            'a51fb4ab5003a6149bd9bf4c18c9b1f0f4945c272549095ab154b9d1052f95b1'
+sha256sums=('5d4366e2b89998f274abe03557ef3bc78b58e47fc62c102d51e6f49e5ed96b4b'
             'SKIP'
-            '694eb4e350843488b781043e4a58ee5d36ebd63720444c81838906ebc518b01e'
+            '91f6775cd2e56b20387307000cb8cdea1ec5aeb978c88f1a995f58a13000c1fe'
             'SKIP'
-            '696f588ea425f7590fe24911aa1b9f5701abb9c6e7683cc173dac15b315f5c6b')
-b2sums=('02488c192678e27b4e83d36662921c3888a3772853c0354e9afe369b3ef1557fb7d9f15232d1d09c3bee53ac4336d2c1f4f0108b3cf71d6a936c16aca6bf8077'
-        'a120ee2517ff9bdc164a55cbd78929b545d77d8f3b4d09e8903ea9c2f1a85ef837b079524dd465b3f0cf268ee1f6db5166ccb5676ac67b31bca1927ea0a6997b'
+            '7de4902904ee9dfbdb0797eaeb4957b2eca0d3843f9186a2ef71da74ce841ad1')
+b2sums=('498da30f8f0c2c3812919eaca0dfa5679ab4517972182d2392e8833b9ca082b0d12777b6a35fd36228a21ac899ec4ee716e66b77e5625885415ccdab36cfb570'
         'SKIP'
-        '89160de3a8a7a0ffa9c41896c47262f49599e92ab7308c80a6d3eee6849c61ee5bb8245d4a7810018baf7923f1bfe3ab6a390a9b5a2b5da9dae7b04b52c76138'
+        '9bb1ac10e2ce3abb28c244ce363a5997e3b2fa5fb14f6f0020515945fbb2ed2ae45aead2f5df5946012ff1488d7383395c87eb4e0b72ca5360a46d47ee5b6b75'
         'SKIP'
-        '3eab795355ad5ca15f5121381d7c9d54720a33191c750b9551ea9995042824233e5c37b550a4a506b7bcb6148b773a36abd7c683425bc151d1c499f9d3c1acf4')
+        'dc9bacc412a9196ed1ab482634ab7385d775395441ae083a0ee68dc9e3761c8ae46ece23a5cc2695c450a56f5eb53dae077a2f22e4d95689d4a2b53d8217f4ed')
 
 export KBUILD_BUILD_HOST=archlinux
 export KBUILD_BUILD_USER=$pkgbase
