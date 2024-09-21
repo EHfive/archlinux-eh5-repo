@@ -1,7 +1,7 @@
 # Maintainer: Jan Alexander Steffens (heftig) <heftig@archlinux.org>
 
 pkgbase=linux-zen-znver3
-pkgver=6.10.8.zen1
+pkgver=6.11.zen1
 pkgrel=1
 pkgdesc='Linux ZEN'
 url='https://github.com/zen-kernel/zen-kernel'
@@ -15,6 +15,9 @@ makedepends=(
   pahole
   perl
   python
+  rust
+  rust-bindgen
+  rust-src
   tar
   xz
 
@@ -42,16 +45,16 @@ validpgpkeys=(
   83BC8889351B5DEBBB68416EB8AC08600F108CDF  # Jan Alexander Steffens (heftig)
 )
 # https://www.kernel.org/pub/linux/kernel/v6.x/sha256sums.asc
-sha256sums=('c0923235779d4606bba87f72b6fe11f796e9e40c1ca9f4d5dbe04cd47ee3c595'
+sha256sums=('55d2c6c025ebc27810c748d66325dd5bc601e8d32f8581d9e77673529bdacb2e'
             'SKIP'
-            '42ec63ce46dab6b1281ac435dd6d325bc1b203c14bdfc476aa97a29d2ef7e7c5'
+            '6561d4c940e6613a914d2c84446c5003cc672708dd802023ae771474f8a6fa39'
             'SKIP'
-            '7e64474d2cb125d4ff5e6593d5c72b42c9b3b5ed6091ad79284dc3c9195f89e7')
-b2sums=('01a004ce8886b00be4ca927ca6b1ce10b5d31535687022accf0b9d1f4aa9b47a1622a82611bd9544abb2c90ad914ad227392d0525d7c93eefbb38fa25ba6c809'
+            '6b960698fa4796459a385537e750d8c88577551680f557d5ac1a8a5f58ee7fcf')
+b2sums=('e7750c0878d71a56a0ce52d4c4c912199dad5bf5e2e8f872585a6494afbb37cbd852e612a6858936d2dc9b7776a3933818f540db408d57e90d18ea5249bba7ab'
         'SKIP'
-        '0fe816d415ee71937bc67d340e7612500ff51820e45e349e6d1bd29086b100a32b405343682b14ac2f7bc1f2572df77a1bf0aea55c58145ac4489c1eec1c8503'
+        '5fece384c127834214130626c0d5663fadf4460ce58f956d8918e5dd64a54e389817471b4a8776078f5f46c97ec52901b3622aa95fbae38f2197024b26ef8b5d'
         'SKIP'
-        'cb76bdfa7fad6bb865b24777c9747e7287246519c84cb8faf00eaac6371d2ca80f351630a71096fd9729fb7809d85aa6f0b9a7648484b8a73616adaffd87533e')
+        '5e7e3209eafb294b3b3ae2108d419a0da382a5afdcf5a0647814bee7579b93ac7de4153855af640879f1eb9cdefffd9661dda73134d81687bf11e2d1f5ad0aac')
 
 export KBUILD_BUILD_HOST=archlinux
 export KBUILD_BUILD_USER=$pkgbase
@@ -143,6 +146,7 @@ _package-headers() {
   install -Dt "$builddir/kernel" -m644 kernel/Makefile
   install -Dt "$builddir/arch/x86" -m644 arch/x86/Makefile
   cp -t "$builddir" -a scripts
+  ln -srt "$builddir" "$builddir/scripts/gdb/vmlinux-gdb.py"
 
   # required when STACK_VALIDATION is enabled
   install -Dt "$builddir/tools/objtool" tools/objtool/objtool
